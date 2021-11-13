@@ -1,0 +1,4 @@
+EMPTY_SYMBOL = "e"
+END_SYMBOL = "$"
+
+RULE_DIVIDER = " "
