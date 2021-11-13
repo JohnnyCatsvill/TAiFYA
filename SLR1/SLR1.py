@@ -16,19 +16,19 @@ class Word:
     def __init__(self, word_type: WordType, word: str, row: int, column: int = 0, e_fold: int = 0,
                  action: callable = None):
         self.type: WordType = word_type
-        self.word: str = word
+        self.str: str = word
         self.row: int = row
         self.col: int = column
         self.e_fold: int = e_fold
         self.action: callable = action
 
     def __repr__(self):
-        return f"{self.word} {self.row}{' ' + str(self.col) if self.col > 0 else ''}{' ' + str(self.e_fold) if self.e_fold > 0 else ''}"
+        return f"{self.str} {self.row}{' ' + str(self.col) if self.col > 0 else ''}{' ' + str(self.e_fold) if self.e_fold > 0 else ''}"
 
     def __eq__(self, other):
         return all([
             self.type == other.type,
-            self.word == other.word,
+            self.str == other.str,
             self.row == other.row,
             self.col == other.col,
             self.action == other.action,
@@ -62,7 +62,7 @@ class Rule:
         self.right: list[Word] = right
 
     def __repr__(self):
-        return f"{self.left}->{[i.word for i in self.right]}"
+        return f"{self.left}->{[i.str for i in self.right]}"
 
 
 def parse_all_rules(rules: list[list[str, list[str], list[callable]]]) -> list[Rule]:
@@ -97,7 +97,7 @@ def parse_all_rules(rules: list[list[str, list[str], list[callable]]]) -> list[R
         output_right = []
         for word_index in range(len(parsed_right)):
             word_letters = parsed_right[word_index]
-            word = Word(get_type(word_letters), word_letters, rule_index, word_index, action=actions[word_index])
+            word = Word(get_type(word_letters), word_letters, rule_index+1, word_index+1, action=actions[word_index])
             output_right.append(word)
 
         list_of_rules.append(Rule(left, output_right))
@@ -123,7 +123,7 @@ class SLR:
     def other_first(rules: list[Rule]):
         nonterms = set([rule.left for rule in rules])
         control_symbols = {EMPTY_SYMBOL, END_SYMBOL}
-        terms = set([letter.word for rule in rules for letter in rule.right if letter.type == WordType.TERM])
+        terms = set([letter.str for rule in rules for letter in rule.right if letter.type == WordType.TERM])
         e_nonterms = {rules[i].left: str(i + 1) for i in range(len(rules)) if rules[i].right[0].type == WordType.EMPTY}
 
         first_table = {i: [] for i in nonterms}
@@ -142,7 +142,7 @@ class SLR:
 
             for rule_index in range(len(rules)):
                 rule = rules[rule_index]
-                first_right = rule.right[0]
+                first_right = deepcopy(rule.right[0])
                 left = rule.left
 
                 there_are_empty_nonterminal = True
@@ -152,110 +152,76 @@ class SLR:
                     there_are_empty_nonterminal = False
                     if first_right.type in [WordType.TERM, WordType.NONTERM]:
                         changed = changed or AddToTable(first_table[left],
-                                                        first_right + " " + str(rule_index + 1) + " " + str(
+                                                        first_right.str + " " + str(rule_index + 1) + " " + str(
                                                             empty_nonterminal_entrance) + some_rule_adder)
 
-                        not_null_e_fold = some_rule_adder or "0"  #
-                        AddToTable(typed_first_table[left], first_right.add_e_fold(int(not_null_e_fold.split(" ")[-1])))  #
+                        not_null_e_fold = some_rule_adder or "0"  # new and v this one too
+                        AddToTable(typed_first_table[left], first_right.add_e_fold(int(not_null_e_fold.split(" ")[-1])))
 
-                        if first_right == WordType.NONTERM:
-                            if first_right in first_table:
-                                for i in first_table[first_right]:
-                                    changed = changed or AddToTable(first_table[left], i)
+                        if first_right.type == WordType.NONTERM and first_right.str in first_table:
+                            for i in first_table[first_right.str]:
+                                changed = changed or AddToTable(first_table[left], i)
 
-                                    parse_for_typed = ParseRule(i)  # new
-                                    if not len(parse_for_typed) > 3:
-                                        parse_for_typed.append("0")
-                                    word_type = Word.get_type(parse_for_typed[0],  #
-                                                              nonterms,  #
-                                                              terms)  #
-                                    AddToTable(typed_first_table[left],  #
-                                               Word(word_type, parse_for_typed[0],  #
-                                                    int(parse_for_typed[1]),  #
-                                                    int(parse_for_typed[2]),
-                                                    int(parse_for_typed[3])))  #
+                            for i in typed_first_table[first_right.str]:  # new
+                                AddToTable(typed_first_table[left], i)     #
 
-                                if first_right in e_nonterms:
-                                    there_are_empty_nonterminal = True
-                                    some_rule_adder = some_rule_adder + " " + e_nonterms[first_right]
-                                    first_right = ParseRule(rule[1][0])[empty_nonterminal_entrance]
-                                    empty_nonterminal_entrance = empty_nonterminal_entrance + 1
+                            if first_right.str in e_nonterms:
+                                there_are_empty_nonterminal = True
+                                some_rule_adder += " " + e_nonterms[first_right.str]
+                                first_right = deepcopy(rule.right[empty_nonterminal_entrance])
+                                empty_nonterminal_entrance += 1
 
-                    elif first_right == EMPTY_SYMBOL:
+                    elif first_right.type == WordType.EMPTY:
                         afterlooking_symbols = {left}
                         afterlooking_symbols_changed = True
 
                         while afterlooking_symbols_changed:
                             afterlooking_symbols_changed = False
 
-                            for new_rule_pack_num in range(len(rules)):
-                                new_rule_pack = rules[new_rule_pack_num]
-                                new_cur_nonterm = new_rule_pack[0]
-                                parsed_rule = ParseRule(new_rule_pack[1][0])
+                            for new_rule_index in range(len(rules)):
+                                new_rule = rules[new_rule_index]
+                                new_left = new_rule.left
 
-                                for letter_num in range(len(parsed_rule)):
-                                    letter = parsed_rule[letter_num]
+                                for word_index in range(len(new_rule.right)):
+                                    word = new_rule.right[word_index]
 
-                                    if letter in afterlooking_symbols:
-                                        if letter_num + 1 < len(parsed_rule):
-                                            next_letter = parsed_rule[letter_num + 1]
+                                    if word.str in afterlooking_symbols:
+                                        if word_index + 1 < len(new_rule.right):
+                                            next_word = new_rule.right[word_index + 1]
 
-                                            if new_cur_nonterm != left:
+                                            if new_left != left:
                                                 changed = changed or AddToTable(empty_table[left],
-                                                                                next_letter + " " + str(
-                                                                                    new_rule_pack_num + 1) + " " + str(
-                                                                                    letter_num + 2) + " " + str(
-                                                                                    rule_index + 1))
+                                                                                next_word.str + " " + str(
+                                                                                new_rule_index + 1) + " " + str(
+                                                                                word_index + 2) + " " + str(
+                                                                                rule_index + 1))
 
-                                                word_type = Word.get_type(next_letter,  #
-                                                                          nonterms,  #
-                                                                          terms)  # new
-                                                AddToTable(typed_empty_table[left],  #
-                                                           Word(word_type,  #
-                                                                next_letter,  #
-                                                                new_rule_pack_num + 1,  #
-                                                                letter_num + 2,  #
-                                                                rule_index + 1))  #
+                                                AddToTable(typed_empty_table[left], next_word.add_e_fold(rule_index + 1))
 
                                             else:
                                                 changed = changed or AddToTable(recurse_table[left],
-                                                                                next_letter + " " + str(
-                                                                                    new_rule_pack_num + 1) + " " + str(
-                                                                                    letter_num + 2) + " " + str(
-                                                                                    rule_index + 1))
+                                                                                next_word.str + " " + str(
+                                                                                new_rule_index + 1) + " " + str(
+                                                                                word_index + 2) + " " + str(
+                                                                                rule_index + 1))
 
-                                                word_type = Word.get_type(next_letter,  #
-                                                                          nonterms,  #
-                                                                          terms)  # new
-                                                AddToTable(typed_recurse_table[left],  #
-                                                           Word(word_type,  #
-                                                                next_letter,  #
-                                                                new_rule_pack_num + 1,  #
-                                                                letter_num + 2,  #
-                                                                rule_index + 1))  #
+                                                AddToTable(typed_recurse_table[left], next_word.add_e_fold(rule_index + 1))
 
-                                            if next_letter in first_table:
-                                                for i in first_table[next_letter]:
+                                            if next_word.str in first_table:
+                                                for i in first_table[next_word.str]:
                                                     changed = changed or AddToTable(empty_table[left],
                                                                                     i + " " + str(rule_index + 1))
 
-                                                    parse_for_typed = ParseRule(i)  # new
-                                                    word_type = Word.get_type(parse_for_typed[0],  #
-                                                                              nonterms,  #
-                                                                              terms)  #
-                                                    AddToTable(typed_empty_table[left], Word(word_type,  #
-                                                                                             parse_for_typed[0],  #
-                                                                                             int(parse_for_typed[1]),  #
-                                                                                             int(parse_for_typed[2]),  #
-                                                                                             rule_index + 1))  #
+                                                for i in typed_first_table[next_word.str]:
+                                                    AddToTable(typed_empty_table[left], i.add_e_fold(rule_index + 1))
 
 
                                         else:
-                                            afterlooking_symbols_changed = new_rule_pack[0] not in afterlooking_symbols
-                                            afterlooking_symbols.add(new_rule_pack[0])
+                                            afterlooking_symbols_changed = new_rule.left not in afterlooking_symbols
+                                            afterlooking_symbols.add(new_rule.left)
                                             # afterlooking_symbols_changed = True
 
-        # print([typed_first_table, typed_empty_table, typed_recurse_table])
+        print([typed_first_table, typed_empty_table, typed_recurse_table])
         return [first_table, empty_table, recurse_table]
 
     def First(self, rules):
@@ -295,30 +261,10 @@ class SLR:
                                                                                 rule_pack_num + 1) + " " + str(
                                                                                 empty_nonterminal_entrance) + some_rule_adder)
 
-                        word_type = Word.get_type(first_letter, set_of_nonterminals, set_of_terminals)  # new
-                        not_empty_rule_adder = some_rule_adder or "0"  #
-                        AddToTable(typed_first_table[cur_nonterm], Word(word_type,  #
-                                                                        first_letter,  #
-                                                                        rule_pack_num + 1,  #
-                                                                        empty_nonterminal_entrance,  #
-                                                                        int(not_empty_rule_adder.split(" ")[-1])))  #
-
                         if first_letter in set_of_nonterminals:
                             if first_letter in first_table:
                                 for i in first_table[first_letter]:
                                     table_was_changed = table_was_changed or AddToTable(first_table[cur_nonterm], i)
-
-                                    parse_for_typed = ParseRule(i)  # new
-                                    if not len(parse_for_typed) > 3:
-                                        parse_for_typed.append("0")
-                                    word_type = Word.get_type(parse_for_typed[0],  #
-                                                              set_of_nonterminals,  #
-                                                              set_of_terminals)  #
-                                    AddToTable(typed_first_table[cur_nonterm],  #
-                                               Word(word_type, parse_for_typed[0],  #
-                                                    int(parse_for_typed[1]),  #
-                                                    int(parse_for_typed[2]),
-                                                    int(parse_for_typed[3])))  #
 
                                 if first_letter in set_of_empty_nonterminals:
                                     there_are_empty_nonterminal = True
@@ -351,49 +297,16 @@ class SLR:
                                                     next_letter + " " + str(new_rule_pack_num + 1) + " " + str(
                                                         letter_num + 2) + " " + str(rule_pack_num + 1))
 
-                                                word_type = Word.get_type(next_letter,  #
-                                                                          set_of_nonterminals,  #
-                                                                          set_of_terminals)  # new
-                                                AddToTable(typed_empty_table[cur_nonterm],  #
-                                                           Word(word_type,  #
-                                                                next_letter,  #
-                                                                new_rule_pack_num + 1,  #
-                                                                letter_num + 2,  #
-                                                                rule_pack_num + 1))  #
-
                                             else:
                                                 table_was_changed = table_was_changed or AddToTable(
                                                     recurse_table[cur_nonterm],
                                                     next_letter + " " + str(new_rule_pack_num + 1) + " " + str(
                                                         letter_num + 2) + " " + str(rule_pack_num + 1))
 
-                                                word_type = Word.get_type(next_letter,  #
-                                                                          set_of_nonterminals,  #
-                                                                          set_of_terminals)  # new
-                                                AddToTable(typed_recurse_table[cur_nonterm],  #
-                                                           Word(word_type,  #
-                                                                next_letter,  #
-                                                                new_rule_pack_num + 1,  #
-                                                                letter_num + 2,  #
-                                                                rule_pack_num + 1))  #
-
                                             if next_letter in first_table:
                                                 for i in first_table[next_letter]:
                                                     table_was_changed = table_was_changed or AddToTable(
                                                         empty_table[cur_nonterm], i + " " + str(rule_pack_num + 1))
-
-                                                    parse_for_typed = ParseRule(i)  # new
-                                                    word_type = Word.get_type(parse_for_typed[0],  #
-                                                                              set_of_nonterminals,  #
-                                                                              set_of_terminals)  #
-                                                    AddToTable(typed_empty_table[cur_nonterm], Word(word_type,  #
-                                                                                                    parse_for_typed[0],
-                                                                                                    #
-                                                                                                    int(parse_for_typed[
-                                                                                                            1]),  #
-                                                                                                    int(parse_for_typed[
-                                                                                                            2]),  #
-                                                                                                    rule_pack_num + 1))  #
 
 
                                         else:

@@ -17,11 +17,12 @@ RULES = [
     ["C", ["e"]],
 ]
 
-print(parse_all_rules(RULES))
-
-slr = SLR(RULES, show_slr=True, show_first=True, show_follow=True)
-slr.run("c $")
-print("//////////////////////////////////////////////////////////////////////////////")
+parsed_rules = parse_all_rules(RULES)
+print(parsed_rules)
+print(SLR.other_first(parsed_rules))
+slr = SLR(RULES, show_slr=False, show_first=True, show_follow=False)
+# slr.run("c $")
+# print("//////////////////////////////////////////////////////////////////////////////")
 
 #RULES = [
 #    ["S", ["A B C $"]],
