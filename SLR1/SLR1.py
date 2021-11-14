@@ -10,6 +10,8 @@ class WordType(Enum):
     FOLD = 2
     END = 3
     EMPTY = 4
+    OK_WORD = 5
+    STARTER = 6
 
 
 class Word:
@@ -161,9 +163,9 @@ class SLR:
     def other_follow(rules: list[Rule]):
 
         nonterms = set([rule.left for rule in rules])
-        e_nonterms = {rules[i].left: i + 1 for i in range(len(rules)) if rules[i].right[0].type == WordType.EMPTY}
-        terms = set([letter for rule in rules for letter in rule.right if
+        terms = set([letter.str for rule in rules for letter in rule.right if
                      letter.type not in [WordType.NONTERM, WordType.EMPTY]])
+        e_nonterms = {rules[i].left: i + 1 for i in range(len(rules)) if rules[i].right[0].type == WordType.EMPTY}
 
         first_table = SLR.other_first(rules)
         follow_table: FollowTable = dict()
@@ -174,14 +176,14 @@ class SLR:
                 word = rule.right[word_index]
                 follow_table[word] = []  # new
 
-        follow_table[Word(Word.get_type(rules[0].left, nonterms, terms), rules[0].left, 0, 0)] = []
+        follow_table[Word(WordType.STARTER, rules[0].left, 0, 0)] = []
 
         last_table = {"not_empty": "not_empty"}
         while follow_table != last_table:
             last_table = deepcopy(follow_table)
 
             typed_follow_word = follow_table[
-                Word(Word.get_type(rules[0].left, nonterms, terms), rules[0].left, 0, 0)]
+                Word(WordType.STARTER, rules[0].left, 0, 0)]
 
             parsed_rule = rules[0].right
             next_letter = parsed_rule[0]
@@ -240,6 +242,90 @@ class SLR:
             follow_table.pop(i)
 
         return follow_table
+
+    @staticmethod
+    def other_slr_table(rules: list[Rule]):
+        follow_table = SLR.other_follow(rules)
+
+        nonterms = []
+        for rule in rules:
+            if rule.left not in nonterms:
+                nonterms.append(rule.left)
+
+        terms = []
+        for rule in rules:
+            for word in rule.right:
+                if word.type == WordType.TERM and word.str not in terms:
+                    terms.append(word.str)
+
+        slr_table = [[i for i in [""] + list(nonterms) + list(terms) + [END_SYMBOL]]]
+
+        for left, right in follow_table.items():
+            thing_to_append = [[] for i in slr_table[0][1:]]
+            thing_to_append.insert(0, [left])
+
+            for i in range(1, len(slr_table[0])):
+                for j in range(len(right)):
+                    word = right[j]
+                    if slr_table[0][i] == word.str:
+
+                        if left.type == WordType.STARTER or len(rules[left.row - 1].right) > int(
+                                left.col) + (1 if left.row == 1 else 0):
+                            if word not in thing_to_append[i]:
+                                thing_to_append[i].append(word)
+
+                            if left.row == 0:
+                                if Word(WordType.OK_WORD, "OK", 0) not in thing_to_append[1]:
+                                    thing_to_append[1].append(Word(WordType.OK_WORD, "OK", 0))
+
+                        else:
+                            if Word(WordType.FOLD, "R", left.row) not in thing_to_append[i]:
+                                thing_to_append[i].append(Word(WordType.FOLD, "R", left.row))
+
+            slr_table.append(thing_to_append)
+
+        for row in slr_table[1:]:
+            for col_index in range(1, len(row)):
+                cell = row[col_index]
+                new_cell = []
+                for word_index in range(len(cell)):
+                    if cell[word_index].e_fold > 0:
+                        if Word(WordType.FOLD, "R", cell[word_index].e_fold) not in new_cell:
+                            new_cell.append(Word(WordType.FOLD, "R", cell[word_index].e_fold))
+                    else:
+                        new_cell.append(cell[word_index])
+
+                row[col_index] = new_cell
+
+        something_changed = True
+        while something_changed:
+            something_changed = False
+            for row in slr_table[1:]:
+                for cell in row[1:]:
+                    if len(cell) > 1:
+                        # new_row_name = ", ".join(cell)
+
+                        need_to_do = True
+
+                        for i in slr_table[1:]:
+                            if cell == i[0]:
+                                need_to_do = False
+
+                        if need_to_do:
+                            something_changed = True
+                            thing_to_append = [[] for i in slr_table[0][1:]]
+                            thing_to_append.insert(0, cell)
+
+                            for needed_rows in cell:
+                                for rows in slr_table[1:]:
+                                    if rows[0] == [needed_rows]:
+                                        for cells_num in range(1, len(rows)):
+                                            for cell_items in rows[cells_num]:
+                                                add_to_table(thing_to_append[cells_num], cell_items)
+
+                            slr_table.append(thing_to_append)
+
+        return slr_table
 
     @staticmethod
     def First(rules):
@@ -331,8 +417,9 @@ class SLR:
         # print([typed_first_table, typed_empty_table, typed_recurse_table])
         return [first_table, empty_table, recurse_table]
 
-    def Follow(self, rules):
-        _first_tables_ = self.First(rules)
+    @staticmethod
+    def Follow(rules):
+        _first_tables_ = SLR.First(rules)
         first_table = _first_tables_[0]
         empty_table = _first_tables_[1]
         recurse_table = _first_tables_[2]

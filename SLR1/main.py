@@ -20,8 +20,9 @@ RULES = [
 parsed_rules = parse_all_rules(RULES)
 # print(parsed_rules)
 # print(SLR.other_first(parsed_rules))
-print(SLR.other_follow(parsed_rules))
-slr = SLR(RULES, show_slr=False, show_first=False, show_follow=True)
+# print(SLR.other_follow(parsed_rules))
+pretty_2d_table(SLR.other_slr_table(parsed_rules))
+slr = SLR(RULES, show_slr=True, show_first=False, show_follow=False)
 # slr.run("c $")
 # print("//////////////////////////////////////////////////////////////////////////////")
 
