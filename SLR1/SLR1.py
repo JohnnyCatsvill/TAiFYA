@@ -328,6 +328,27 @@ class SLR:
         return slr_table
 
     @staticmethod
+    def other_check_if_it_slr(slr_table: list[list[list[Word]]]):
+        for row_num in range(1, len(slr_table)):
+            row = slr_table[row_num]
+            for cell in row[1:]:
+                if len(cell) >= 2:
+                    move = False
+                    fold = False
+
+                    for cell_elem in cell:
+                        if cell_elem.type == WordType.FOLD:
+                            if not fold:
+                                fold = True
+                            else:
+                                raise Exception(f"Non SLR Grammar \n \n {cell} in {row_num}th pos {row[0]} nonterm")
+                        else:
+                            move = True
+
+                    if move and fold:
+                        raise Exception(f"Non SLR Grammar \n \n {cell} in {row_num}th pos {row[0]} nonterm")
+
+    @staticmethod
     def First(rules):
         set_of_nonterminals = set([rule_pack[0] for rule_pack in rules])
         set_of_control_symbols = {EMPTY_SYMBOL, END_SYMBOL}
