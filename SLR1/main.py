@@ -18,9 +18,10 @@ RULES = [
 ]
 
 parsed_rules = parse_all_rules(RULES)
-print(parsed_rules)
-print(SLR.other_first(parsed_rules))
-slr = SLR(RULES, show_slr=False, show_first=True, show_follow=False)
+# print(parsed_rules)
+# print(SLR.other_first(parsed_rules))
+print(SLR.other_follow(parsed_rules))
+slr = SLR(RULES, show_slr=False, show_first=False, show_follow=True)
 # slr.run("c $")
 # print("//////////////////////////////////////////////////////////////////////////////")
 
