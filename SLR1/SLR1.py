@@ -356,6 +356,12 @@ class SLR:
         dict_of_rule_letters = {i + 1: rules[i].left for i in range(len(rules))}
 
         input_stack = input[::-1]
+        nonterms = [i.left for i in rules]
+        if any([i in nonterms for i in input]):
+            if show:
+                print("в входные данные затесался нетерминал")
+            return RUNNER_FAIL
+
         left_stack = []
         right_stack = [[Word(WordType.STARTER, rules[0].left, 0, 0)]]
 
@@ -367,10 +373,16 @@ class SLR:
                 if row[0] == right_stack[-1]:
                     cell_num = 0
                     for cell_num in range(1, len(slr_table[0])):
+                        if not input_stack:
+                            if show:
+                                print("НЕ ПОДХОДИТ, пустой инпут стак, а конца так и не видно")
+                            return RUNNER_FAIL
+
                         if slr_table[0][cell_num] == input_stack[-1]:
                             if not row[cell_num]:
-                                print("НЕ ПОДХОДИТ, наступили на ячейку где нет следующего хода")
-                                return 0
+                                if show:
+                                    print("НЕ ПОДХОДИТ, наступили на ячейку где нет следующего хода")
+                                return RUNNER_FAIL
                             else:
 
                                 if len(row[cell_num]) > 1:
@@ -386,20 +398,25 @@ class SLR:
                                     else:
                                         left_stack.append(input_stack.pop())
                                         right_stack.append(row[cell_num])
-                            cell_num = cell_num - 1
+                            cell_num -= 1
                             break
                     if cell_num + 1 == len(slr_table[0]):
-                        print("НЕ ПОДХОДИТ")
-                        return 0
+                        if show:
+                            print("НЕ ПОДХОДИТ")
+                        return RUNNER_FAIL
                     break
             if show:
                 print()
                 print("разбор  INPUT-", input_stack, "  RIGHT-", right_stack, "  LEFT-", left_stack)
 
         if left_stack == [rules[0].left]:
-            print("ПОДХОДИТ")
+            if show:
+                print("ПОДХОДИТ")
+            return RUNNER_OK
         else:
-            print("НЕ ПОДХОДИТ")
+            if show:
+                print(f"НЕ ПОДХОДИТ, в стаке валяются лишние символы -> {left_stack[1:]}")
+            return RUNNER_FAIL
 
     def __init__(self, rules, show_slr: bool = False, show_first: bool = False, show_follow: bool = False):
         self.rules = rules
@@ -418,4 +435,4 @@ class SLR:
         SLR.check_if_it_slr(self.slr)
 
     def run(self, input_text: list[str], show_parsing: bool = False):
-        self.runner(self.slr, input_text, self.rules, show_parsing)
+        return self.runner(self.slr, input_text, self.rules, show_parsing)

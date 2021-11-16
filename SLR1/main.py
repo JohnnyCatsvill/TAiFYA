@@ -20,6 +20,7 @@ RULES = [
 parsed_rules = parse_all_rules(RULES)
 slr = SLR(parsed_rules, show_slr=False, show_first=False, show_follow=False)
 slr.run("c $".split(" "))
+
 #
 # RULES = [
 #    ["S", ["A B C $"]],
