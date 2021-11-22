@@ -10,8 +10,21 @@ class Token2:
         self.row: int = row
         self.col: int = column
 
+    def __repr__(self):
+        word = str(self.value)
+        return f"word:{word}"
 
-def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], show_parse: bool = False):
+    def __eq__(self, other):
+        return self.token == other.token and self.value == other.value and self.row == other.row and self.col == other.col
+
+
+class FuncPart:
+    def __init__(self, function: callable, arg_length: int):
+        self.f = function
+        self.arg_length = arg_length
+
+
+def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], f: dict[str, FuncPart], show_parse: bool = False):
     slr_table = slr.df
     starter_word = slr.starter_word
     ok_word = slr.ok_word
@@ -27,6 +40,8 @@ def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], show_parse: bool = 
     left_stack = []
     right_stack = [[starter_word]]
 
+    function_args = {i: [] for i in f}
+
     if show_parse:
         print(f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
@@ -41,10 +56,26 @@ def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], show_parse: bool = 
             raise Exception(RUNNER_ERROR, "НЕТ ДАЛЬНЕЙШЕГО ХОДА, наступили на пустую ячейку")
         else:
             if next_move[0].type == WordType.FOLD:
+                popped_left = []
+                popped_right = []
                 for i in range(rules_length[next_move[0].row]):  # pop x times
-                    left_stack.pop()
-                    right_stack.pop()
-                input_stack.append(indexes_to_words[next_move[0].row])
+                    popped_left.append(left_stack.pop())
+                    popped_right.append(right_stack.pop())
+
+                popped_left = popped_left[::-1]
+                popped_right = popped_right[::-1]
+                result = ""
+                for r, l in zip(popped_right, popped_left):
+                    for i in r:
+                        for a in i.action:
+                            function_args[a].append(l.value)
+
+                        if len(function_args[a]) >= f[a].arg_length:
+                            result = f[a].f(function_args[a])
+
+                input_stack.append(Token2(result, rules[next_move[0].row-1].left, 0, 0))
+                # input_stack.append(indexes_to_words[next_move[0].row])
+                function_args = {i: [] for i in f}
             else:
                 left_stack.append(input_stack.pop())
                 right_stack.append(next_move)

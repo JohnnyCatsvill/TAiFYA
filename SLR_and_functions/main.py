@@ -1,30 +1,42 @@
 from SLR1 import SLR
-from interfaces.slr_interfaces import FuncPart
-from runner import runner
+from runner import runner, Token2, FuncPart
 
 
 def main():
-    try:
+    # try:
         f = {
-            "add": FuncPart(lambda *args: args[0] + args[1], 2),
-            "sub": FuncPart(lambda *args: args[0] - args[1], 2),
-            "print": FuncPart(lambda *args: print(args[0]), 1),
+            "add": FuncPart(lambda arg: arg[0] + arg[1], 2),
+            "sub": FuncPart(lambda arg: arg[0] - arg[1], 2),
+            "print": FuncPart(lambda arg: print(arg[0]), 1),
         }
 
         RULES = [
-            ["S", ["A + B $"], [f["add"], [], f["add"], []]],
-            ["A", ["a - a"], [f["sub"], [], f["sub"]]],
-            ["B", ["b - b"], [f["sub"], [], f["sub"]]],
+            ["S", ["A + B $"], [["add"], [], ["add"], []]],
+            ["A", ["a - a"], [["sub"], [], ["sub"]]],
+            ["B", ["b - b"], [["sub"], [], ["sub"]]],
+        ]
+
+        lexer_list = [
+            Token2(2, "a"),
+            Token2("-", "-"),
+            Token2(1, "a"),
+
+            Token2("+", "+"),
+
+            Token2(5, "b"),
+            Token2("-", "-"),
+            Token2(2, "b"),
+            Token2("$", "$"),
         ]
 
         slr = SLR(RULES, show_slr=False, show_first=False, show_follow=False)
-        runner(slr, lexer_list, slr.rules)
+        print("ПОБЕДА" if runner(slr, lexer_list, slr.rules, f, True) else "ДА ЕБ ТВОЮ МАТЬ")
 
-    except Exception as e:
-        print(e.args)
-        return "Не подходит"
-    else:
-        return "Подходит"
+    # except Exception as e:
+    #     print(e.args)
+    #     return "Не подходит"
+    # else:
+    #     return "Подходит"
 
 
 if __name__ == '__main__':

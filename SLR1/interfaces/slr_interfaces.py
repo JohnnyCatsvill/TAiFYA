@@ -24,7 +24,7 @@ class Word:
         self.action: list[list[str]] = action
 
     def __hash__(self):
-        return hash((self.str, self.type, self.row, self.col, self.e_fold, self.action))
+        return hash((self.str, self.type, self.row, self.col, self.e_fold))
 
     def __repr__(self):
         row = ' ' + str(self.row) if self.row > 0 else ''
@@ -38,7 +38,7 @@ class Word:
             self.str == other.str,
             self.row == other.row,
             self.col == other.col,
-            self.action == other.action,
+            # self.action == other.action,
         ])
 
     def add_e_fold(self, e_fold: int):
@@ -107,8 +107,3 @@ def parse_all_rules(rules: list[list[str, list[str], list[list[str]]]]) -> list[
         list_of_rules.append(Rule(left, output_right))
     return list_of_rules
 
-
-class FuncPart:
-    def __init__(self, function: callable, arg_length: int):
-        self.f = function
-        self.arg_length = arg_length

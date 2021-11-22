@@ -15,7 +15,7 @@ class Token:
         return f"row: {row} col: {col}  word: {word}  token: {self.token}"
 
     def __eq__(self, other):
-        return self.token == other.token and self.word == other.word and self.row == other.row and self.column == other.row
+        return self.token == other.token and self.word == other.word and self.row == other.row and self.column == other.column
 
 
 class Lexer:
