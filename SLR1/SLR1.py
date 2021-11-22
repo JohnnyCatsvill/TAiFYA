@@ -1,127 +1,9 @@
-from TablePrinter import *
-from constants import *
-from enum import Enum
-from copy import deepcopy
+from SLR_list_to_DF import DF
+from pretty_table import pretty_2d_table
+from interfaces.slr_interfaces import *
 
 
-class WordType(Enum):
-    NONTERM = 0
-    TERM = 1
-    FOLD = 2
-    END = 3
-    EMPTY = 4
-    OK_WORD = 5
-    STARTER = 6
-
-
-class Word:
-    def __init__(self, word_type: WordType, word: str, row: int, column: int = 0, e_fold: int = 0,
-                 action: callable = None):
-        self.type: WordType = word_type
-        self.str: str = word
-        self.row: int = row
-        self.col: int = column
-        self.e_fold: int = e_fold
-        self.action: callable = action
-
-    def __hash__(self):
-        return hash((self.str, self.type, self.row, self.col, self.e_fold, self.action))
-
-    def __repr__(self):
-        column = ' ' + str(self.col) if self.col > 0 else ''
-        e_fold = ' ' + str(self.e_fold) if self.e_fold > 0 else ''
-        return f"{self.str} {self.row}{column}{e_fold}"
-
-    def __eq__(self, other):
-        return all([
-            self.type == other.type,
-            self.str == other.str,
-            self.row == other.row,
-            self.col == other.col,
-            self.action == other.action,
-        ])
-
-    @staticmethod
-    def get_type(word: str, nonterms: set[str], terms: set[str]):
-        if word in nonterms:
-            return WordType.NONTERM
-        elif word in terms:
-            return WordType.TERM
-        elif word == EMPTY_SYMBOL:
-            return WordType.EMPTY
-        elif word == END_SYMBOL:
-            return WordType.END
-        else:
-            raise "Unknown word type"
-
-    def add_e_fold(self, e_fold: int):
-        output: Word = deepcopy(self)
-        output.e_fold = e_fold
-        return output
-
-
-FirstTable = dict[str, list[Word]]
-FollowTable = dict[Word, list[Word]]
-
-
-class Rule:
-    def __init__(self, left: str, right: list[Word]):
-        self.left: str = left
-        self.right: list[Word] = right
-
-    def __repr__(self):
-        return f"{self.left}->{[i.str for i in self.right]}"
-
-
-def parse_all_rules(rules: list[list[str, list[str], list[callable]]]) -> list[Rule]:
-    set_of_nonterminals = set([rule_pack[0] for rule_pack in rules])
-    set_of_control_symbols = {EMPTY_SYMBOL, END_SYMBOL}
-    set_of_terminals = set([letter for rule_pack in rules for letter in parse_rule(rule_pack[1][0]) if
-                            letter not in set_of_nonterminals and letter not in set_of_control_symbols])
-
-    def get_type(word_str):
-        if word_str in set_of_nonterminals:
-            return WordType.NONTERM
-        elif word_str in set_of_terminals:
-            return WordType.TERM
-        elif word_str == EMPTY_SYMBOL:
-            return WordType.EMPTY
-        elif word_str == END_SYMBOL:
-            return WordType.END
-        else:
-            raise "Unknown word type"
-
-    list_of_rules = []
-    for rule_index in range(len(rules)):
-        rule = rules[rule_index]
-        left = rule[0]
-        right = rule[1][0]
-        actions = [] if len(rule) < 3 else rule[2]
-
-        parsed_right = right.split(RULE_DIVIDER)
-        while len(actions) < len(parsed_right):
-            actions.append(None)
-
-        output_right = []
-        for word_index in range(len(parsed_right)):
-            word_letters = parsed_right[word_index]
-            word = Word(get_type(word_letters),
-                        word_letters,
-                        rule_index + 1,
-                        word_index + 1,
-                        action=actions[word_index])
-            output_right.append(word)
-
-        list_of_rules.append(Rule(left, output_right))
-    return list_of_rules
-
-
-def parse_rule(rule: str, divider=" "):
-    rule_list: list[str] = rule.split(divider)
-    return rule_list
-
-
-def add_to_table(table, thing):
+def list_append(table: list[any], thing: any):
     if thing not in table:
         table.append(thing)
         return True
@@ -147,11 +29,11 @@ class SLR:
                 e_fold = 0
                 for right_word in rule.right:
                     if right_word.type in [WordType.TERM, WordType.NONTERM, WordType.END]:
-                        changed += add_to_table(first_table[rule.left], right_word.add_e_fold(e_fold))
+                        changed += list_append(first_table[rule.left], right_word.add_e_fold(e_fold))
 
                         if right_word.type == WordType.NONTERM and right_word.str in first_table:
                             for i in first_table[right_word.str]:
-                                changed += add_to_table(first_table[rule.left], i)
+                                changed += list_append(first_table[rule.left], i)
 
                         if right_word.str in e_nonterms:
                             e_fold = e_nonterms[right_word.str]
@@ -160,12 +42,8 @@ class SLR:
 
         return first_table
 
-    @staticmethod
-    def follow(rules: list[Rule]):
+    def follow(self, rules: list[Rule]):
 
-        # nonterms = set([rule.left for rule in rules])
-        # terms = set([letter.str for rule in rules for letter in rule.right if
-        #              letter.type not in [WordType.NONTERM, WordType.EMPTY]])
         e_nonterms = {rules[i].left: i + 1 for i in range(len(rules)) if rules[i].right[0].type == WordType.EMPTY}
 
         first_table = SLR.first(rules)
@@ -177,30 +55,29 @@ class SLR:
                 word = rule.right[word_index]
                 follow_table[word] = []  # new
 
-        follow_table[Word(WordType.STARTER, rules[0].left, 0, 0)] = []
+        follow_table[self.starter_word] = []
 
         last_table = {"not_empty": "not_empty"}
         while follow_table != last_table:
             last_table = deepcopy(follow_table)
 
-            typed_follow_word = follow_table[
-                Word(WordType.STARTER, rules[0].left, 0, 0)]
+            typed_follow_word = follow_table[self.starter_word]
 
             parsed_rule = rules[0].right
             next_letter = parsed_rule[0]
 
             if next_letter.type in [WordType.TERM, WordType.END]:
-                add_to_table(typed_follow_word, next_letter)
+                list_append(typed_follow_word, next_letter)
             elif next_letter.type == WordType.NONTERM:
-                add_to_table(typed_follow_word, next_letter)
+                list_append(typed_follow_word, next_letter)
 
                 for i in first_table[next_letter.str]:
-                    add_to_table(typed_follow_word, i)
+                    list_append(typed_follow_word, i)
 
                 if next_letter in follow_table:
                     if next_letter.str in e_nonterms:
                         for i in follow_table[next_letter]:
-                            add_to_table(typed_follow_word, i.add_e_fold(e_nonterms[next_letter.str]))
+                            list_append(typed_follow_word, i.add_e_fold(e_nonterms[next_letter.str]))
 
             for rule_index in range(len(rules)):
                 rule = rules[rule_index]
@@ -215,24 +92,24 @@ class SLR:
                         next_letter = parsed_rule[word_index + 1]
 
                         if next_letter.type in [WordType.TERM, WordType.END]:
-                            add_to_table(typed_follow_word, next_letter)
+                            list_append(typed_follow_word, next_letter)
 
                         elif next_letter.type == WordType.NONTERM:
-                            add_to_table(typed_follow_word, next_letter)
+                            list_append(typed_follow_word, next_letter)
 
                             for i in first_table[next_letter.str]:
-                                add_to_table(typed_follow_word, i)
+                                list_append(typed_follow_word, i)
 
                             if next_letter in follow_table:
                                 if next_letter.str in e_nonterms:
                                     for i in follow_table[next_letter]:
-                                        add_to_table(typed_follow_word, i.add_e_fold(e_nonterms[next_letter.str]))
+                                        list_append(typed_follow_word, i.add_e_fold(e_nonterms[next_letter.str]))
 
                     elif word.type != WordType.EMPTY:
                         for i in follow_table:
                             if i.str == cur_nonterm:
                                 for j in follow_table[i]:
-                                    add_to_table(typed_follow_word, j)
+                                    list_append(typed_follow_word, j)
 
         items_to_delete = []
         for i, j in follow_table.items():
@@ -244,9 +121,8 @@ class SLR:
 
         return follow_table
 
-    @staticmethod
-    def slr(rules: list[Rule]):
-        follow_table = SLR.follow(rules)
+    def slr(self, rules: list[Rule]):
+        follow_table = self.follow
 
         nonterms = []
         for rule in rules:
@@ -276,12 +152,13 @@ class SLR:
                                 thing_to_append[i].append(word)
 
                             if left.row == 0:
-                                if Word(WordType.OK_WORD, "OK", 0) not in thing_to_append[1]:
-                                    thing_to_append[1].append(Word(WordType.OK_WORD, "OK", 0))
+                                if self.ok_word not in thing_to_append[1]:
+                                    thing_to_append[1].append(self.ok_word)
 
                         else:
-                            if Word(WordType.FOLD, "R", left.row) not in thing_to_append[i]:
-                                thing_to_append[i].append(Word(WordType.FOLD, "R", left.row))
+                            fold_word = Word(WordType.FOLD, "R", left.row)
+                            if fold_word not in thing_to_append[i]:
+                                thing_to_append[i].append(fold_word)
 
             slr_table.append(thing_to_append)
 
@@ -291,8 +168,9 @@ class SLR:
                 new_cell = []
                 for word_index in range(len(cell)):
                     if cell[word_index].e_fold > 0:
-                        if Word(WordType.FOLD, "R", cell[word_index].e_fold) not in new_cell:
-                            new_cell.append(Word(WordType.FOLD, "R", cell[word_index].e_fold))
+                        fold_word = Word(WordType.FOLD, "R", cell[word_index].e_fold)
+                        if fold_word not in new_cell:
+                            new_cell.append(fold_word)
                     else:
                         new_cell.append(cell[word_index])
 
@@ -322,7 +200,7 @@ class SLR:
                                     if rows[0] == [needed_rows]:
                                         for cells_num in range(1, len(rows)):
                                             for cell_items in rows[cells_num]:
-                                                add_to_table(thing_to_append[cells_num], cell_items)
+                                                list_append(thing_to_append[cells_num], cell_items)
 
                             slr_table.append(thing_to_append)
 
@@ -349,90 +227,78 @@ class SLR:
                     if move and fold:
                         raise Exception(f"Non SLR Grammar \n \n {cell} in {row_num}th pos {row[0]} nonterm")
 
-    @staticmethod
-    def runner(slr_table: list[list[list[Word]]], input: list[str], rules: list[Rule], show: bool = False):
+    def runner(self, slr_table: DF, input: list[str], rules: list[Rule], show_parse: bool = False):
 
-        dict_of_rule_length = {i + 1: len(rules[i].right) - (i == 0 or rules[i].right[0].type == WordType.EMPTY) for i in range(len(rules))}
-        dict_of_rule_letters = {i + 1: rules[i].left for i in range(len(rules))}
-
-        input_stack = input[::-1]
         nonterms = [i.left for i in rules]
         if any([i in nonterms for i in input]):
-            if show:
-                print("в входные данные затесался нетерминал")
-            return RUNNER_FAIL
+            raise Exception(RUNNER_ERROR, "ИНПУТ СТАК НЕ ВАЛИДЕН, в него затесался нетерминал")
 
+        rules_length = {i+1: len(v.right) - (i == 0 or v.right[0].type == WordType.EMPTY) for i, v in enumerate(rules)}
+        word_by_indexes = {i+1: v.left for i, v in enumerate(rules)}
+
+        input_stack = input[::-1]
         left_stack = []
-        right_stack = [[Word(WordType.STARTER, rules[0].left, 0, 0)]]
+        right_stack = [[self.starter_word]]
 
-        if show:
-            print("разбор  INPUT-", input_stack, "  RIGHT-", right_stack, "  LEFT-", left_stack)
+        if show_parse:
+            print(f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
-        while right_stack[-1] != [Word(WordType.OK_WORD, "OK", 0)]:
-            for row in slr_table:
-                if row[0] == right_stack[-1]:
-                    cell_num = 0
-                    for cell_num in range(1, len(slr_table[0])):
-                        if not input_stack:
-                            if show:
-                                print("НЕ ПОДХОДИТ, пустой инпут стак, а конца так и не видно")
-                            return RUNNER_FAIL
+        while right_stack != [[self.starter_word], [self.ok_word]] or left_stack != [self.starter_word.str]:
+            if not input_stack:
+                raise Exception(RUNNER_ERROR, "ИНПУТ СТАК ПУСТ, а нам из него еще данные брать хотелось")
+            elif not (elem := input_stack[-1]) in slr_table.df:
+                raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, он отсутствует в SLR '{elem}'")
+            elif not (elem := str(right_stack[-1])) in slr_table.df.index:
+                raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, он отсутствует в SLR '{elem}'")
+            elif not (next_move := slr_table.get(right_stack[-1], input_stack[-1])):
+                raise Exception(RUNNER_ERROR, "НЕТ ДАЛЬНЕЙШЕГО ХОДА, наступили на пустую ячейку")
+            else:
+                if next_move[0].type == WordType.FOLD:
+                    for i in range(rules_length[next_move[0].row]):
+                        left_stack.pop()
+                        right_stack.pop()
+                    input_stack.append(word_by_indexes[next_move[0].row])
+                else:
+                    left_stack.append(input_stack.pop())
+                    right_stack.append(next_move)
 
-                        if slr_table[0][cell_num] == input_stack[-1]:
-                            if not row[cell_num]:
-                                if show:
-                                    print("НЕ ПОДХОДИТ, наступили на ячейку где нет следующего хода")
-                                return RUNNER_FAIL
-                            else:
+            if show_parse:
+                print("\n" + f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
-                                if len(row[cell_num]) > 1:
-                                    left_stack.append(input_stack.pop())
-                                    right_stack.append(row[cell_num])
-                                else:
-                                    if row[cell_num][0].type == WordType.FOLD:
+        return RUNNER_OK
 
-                                        for i in range(dict_of_rule_length[row[cell_num][0].row]):
-                                            left_stack.pop()
-                                            right_stack.pop()
-                                        input_stack.append(dict_of_rule_letters[row[cell_num][0].row])
-                                    else:
-                                        left_stack.append(input_stack.pop())
-                                        right_stack.append(row[cell_num])
-                            cell_num -= 1
-                            break
-                    if cell_num + 1 == len(slr_table[0]):
-                        if show:
-                            print("НЕ ПОДХОДИТ")
-                        return RUNNER_FAIL
-                    break
-            if show:
-                print()
-                print("разбор  INPUT-", input_stack, "  RIGHT-", right_stack, "  LEFT-", left_stack)
+    def __init__(self,
+                 rules: list[list[str, list[str], list[callable]]],
+                 show_slr: bool = False,
+                 show_first: bool = False,
+                 show_follow: bool = False):
 
-        if left_stack == [rules[0].left]:
-            if show:
-                print("ПОДХОДИТ")
-            return RUNNER_OK
-        else:
-            if show:
-                print(f"НЕ ПОДХОДИТ, в стаке валяются лишние символы -> {left_stack[1:]}")
-            return RUNNER_FAIL
+        self.rules = parse_all_rules(rules)
 
-    def __init__(self, rules, show_slr: bool = False, show_first: bool = False, show_follow: bool = False):
-        self.rules = rules
+        self.starter_word = Word(WordType.STARTER, self.rules[0].left)
+        self.ok_word = Word(WordType.OK_WORD, "OK")
 
-        self.first = SLR.first(rules)
+        self.first = SLR.first(self.rules)
         if show_first:
             print(self.first)
 
-        self.follow = SLR.follow(rules)
+        self.follow = self.follow(self.rules)
         if show_follow:
             print(self.follow)
 
-        self.slr = SLR.slr(rules)
+        self.slr = self.slr(self.rules)
+        self.df = DF(self.slr)
         if show_slr:
             pretty_2d_table(self.slr)
+
         SLR.check_if_it_slr(self.slr)
 
-    def run(self, input_text: list[str], show_parsing: bool = False):
-        return self.runner(self.slr, input_text, self.rules, show_parsing)
+    def run(self, input_text: list[str], show_err: bool = False, show_parsing: bool = False):
+        try:
+            self.runner(self.df, input_text, self.rules, show_parsing)
+        except Exception as e:
+            if show_err:
+                print(e)
+            return "Не Подходит"
+        else:
+            return "Подходит"

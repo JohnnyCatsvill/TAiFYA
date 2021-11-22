@@ -1,4 +1,4 @@
-from constants import *
+from constants_lex import *
 
 
 class Token:
@@ -8,21 +8,33 @@ class Token:
         self.row: int = row
         self.column: int = column
 
+    def __repr__(self):
+        word = self.word.ljust(PRINT_WORD_LENGTH)  # align data
+        row = str(self.row).ljust(PRINT_WORD_ROW)
+        col = str(self.column).ljust(PRINT_WORD_COLUMN)
+        return f"row: {row} col: {col}  word: {word}  token: {self.token}"
+
+    def __eq__(self, other):
+        return self.token == other.token and self.word == other.word and self.row == other.row and self.column == other.row
+
 
 class Lexer:
 
-    def __init__(self, program_text):
+    def __init__(self, program_text, log_states: bool = False, show_spaces: bool = False, show_lex: bool = False):
         self.__text = program_text + "\n"
         self.list: list[Token] = []
+        self.__run(log_states, show_spaces)
+        if show_lex:
+            self.show()
 
-    def run(self, show_states=False, show_spaces=False):
+    def __run(self, show_states=False, show_spaces=False):
 
         def state_error(symbol, word, row, column):
             if symbol in STOP_POINTS:
                 self.list.append(Token(word[0], ERROR_NAME, row, column))
                 word[0] = ""
                 raise Exception("Lexer's unexpected symbol", f"{self.list[-1]}")
-                return state_start(symbol, word, row, column)
+                # return state_start(symbol, word, row, column)
             else:
                 return state_error
 
@@ -258,12 +270,6 @@ class Lexer:
 
         def actual_run(first_state=state_start):
 
-            def check_for_type_length_limit():
-                for elem in self.list:
-                    if elem.token in MAX_LENGTH_OF_TYPES:
-                        if len(elem.word) > MAX_LENGTH_OF_TYPES[elem.token]:
-                            elem.token = ERROR_NAME
-
             state = first_state
 
             last_symbol = ""
@@ -284,9 +290,15 @@ class Lexer:
 
                 word[0] += i
                 last_symbol = i
-            check_for_type_length_limit()
+
+        def check_for_type_length_limit():
+            for elem in self.list:
+                if elem.token in MAX_LENGTH_OF_TYPES:
+                    if len(elem.word) > MAX_LENGTH_OF_TYPES[elem.token]:
+                        elem.token = ERROR_NAME
 
         actual_run()
+        check_for_type_length_limit()
 
     def show(self):
         for i in self.list:

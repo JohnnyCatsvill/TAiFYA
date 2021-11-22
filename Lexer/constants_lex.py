@@ -87,7 +87,8 @@ MAX_LENGTH_OF_TYPES = {
     ID_NAME: 64
 }
 
-# just for debugging tokens
-PRINT_WORD_LENGTH = 6
+
+# just for debugging
+PRINT_WORD_LENGTH = 8
 PRINT_WORD_ROW = 3
 PRINT_WORD_COLUMN = 3

@@ -5,3 +5,5 @@ RULE_DIVIDER = " "
 
 RUNNER_FAIL = 0
 RUNNER_OK = 1
+
+RUNNER_ERROR = "Runner Error"
