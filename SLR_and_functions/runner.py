@@ -4,18 +4,19 @@ from interfaces.slr_interfaces import Rule, WordType
 
 
 class Token2:
-    def __init__(self, value: any, token: str, row: int = 0, column: int = 0):
-        self.value: any = value
+    def __init__(self, value: any, token: str, values: dict[str, any] = dict(), row: int = 0, column: int = 0):
+        self.word: any = value
         self.token: str = token
+        self.values: dict[str, any] = values
         self.row: int = row
         self.col: int = column
 
     def __repr__(self):
-        word = str(self.value)
-        return f"word:{word}"
+        word = str(self.word)
+        return f"word:{self.values} {word}"
 
     def __eq__(self, other):
-        return self.token == other.token and self.value == other.value and self.row == other.row and self.col == other.col
+        return self.token == other.token and self.word == other.word and self.row == other.row and self.col == other.col
 
 
 class FuncPart:
@@ -45,7 +46,7 @@ def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], f: dict[str, FuncPa
     if show_parse:
         print(f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
-    while right_stack != [[starter_word], [ok_word]] or left_stack != [Token2("X", starter_word.str, 0, 0)]:
+    while right_stack != [[starter_word], [ok_word]] or left_stack != [Token2("result", starter_word.str, 0, 0)]:
         if not input_stack:
             raise Exception(RUNNER_ERROR, "ИНПУТ СТАК ПУСТ, а нам из него еще данные брать хотелось")
         elif not (elem := input_stack[-1].token) in slr_table.df:
@@ -68,12 +69,12 @@ def runner(slr: SLR, lexer: list[Token2], rules: list[Rule], f: dict[str, FuncPa
                 for r, l in zip(popped_right, popped_left):
                     for i in r:
                         for a in i.action:
-                            function_args[a].append(l.value)
+                            function_args[a].append(l.values)
 
-                        if len(function_args[a]) >= f[a].arg_length:
-                            result = f[a].f(function_args[a])
+                            if len(function_args[a]) >= f[a].arg_length:
+                                result = f[a].f(function_args[a])
 
-                input_stack.append(Token2(result, rules[next_move[0].row-1].left, 0, 0))
+                input_stack.append(Token2("result", rules[next_move[0].row-1].left, result, 0, 0))
                 # input_stack.append(indexes_to_words[next_move[0].row])
                 function_args = {i: [] for i in f}
             else:
