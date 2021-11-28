@@ -1,4 +1,4 @@
-dictionary = {
+IDS = {
     "void": "function_type",
     "int": "type",
     "float": "type",

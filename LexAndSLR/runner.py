@@ -2,6 +2,8 @@ from SLR1 import Rule, SLR
 from SLR1 import WordType
 from constants.constants_slr import *
 from lexer import Token
+from slr_exceptions.slr_exception import SLRException, SLRRunnerException
+from slr_exceptions.exceptions_enum import SLRErrId
 
 
 def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = False):
@@ -10,8 +12,9 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
     ok_word = slr.ok_word
 
     nonterms = [i.left for i in rules]
-    if any([i.token in nonterms for i in lexer]):
-        raise Exception(RUNNER_ERROR, "ИНПУТ СТАК НЕ ВАЛИДЕН, в него затесался нетерминал")
+    for i, v in enumerate(lexer):
+        if v.token in nonterms:
+            raise SLRException(SLRErrId.NONTERMINAL_IN_INPUT_STACK, v.word, v.row, v.column)
 
     rules_length = {i + 1: len(v.right) - (i == 0 or v.right[0].type == WordType.EMPTY) for i, v in enumerate(rules)}
     indexes_to_words = {i + 1: Token("X", v.left, 0, 0) for i, v in enumerate(rules)}
@@ -25,13 +28,13 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
 
     while right_stack != [[starter_word], [ok_word]] or left_stack != [Token("X", starter_word.str, 0, 0)]:
         if not input_stack:
-            raise Exception(RUNNER_ERROR, "ИНПУТ СТАК ПУСТ, а нам из него еще данные брать хотелось")
-        elif not (elem := input_stack[-1].token) in slr_table.df:
-            raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, {elem} отсутствует в SLR")
-        elif not (elem := str(right_stack[-1])) in slr_table.df.index:
-            raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, {elem} отсутствует в SLR")
+            raise SLRRunnerException(SLRErrId.EMPTY_INPUT_STACK)
+        elif not (elemToken := input_stack[-1]).token in slr_table.df:
+            raise SLRRunnerException(SLRErrId.NON_GRAMMAR_SYMBOL_TOKEN, elemToken.word, elemToken.row, elemToken.column)
+        elif not (elemIndex := str(right_stack[-1])) in slr_table.df.index:
+            raise SLRRunnerException(SLRErrId.NON_GRAMMAR_SYMBOL_WORD, elemIndex, elemToken.row, elemToken.column)
         elif not (next_move := slr_table.get(right_stack[-1], input_stack[-1].token)):
-            raise Exception(RUNNER_ERROR, "НЕТ ДАЛЬНЕЙШЕГО ХОДА, наступили на пустую ячейку")
+            raise SLRRunnerException(SLRErrId.NOWHERE_TO_MOVE_NEXT, str(next_move), elemIndex, elemToken.token)
         else:
             if next_move[0].type == WordType.FOLD:
                 for i in range(rules_length[next_move[0].row]):  # pop x times
@@ -46,7 +49,6 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
                 print("\n" + f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
     return RUNNER_OK
-
 
 # def runner(slr_table: list[list[list[Word]]],
 #            lexer: list[Token],

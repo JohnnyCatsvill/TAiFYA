@@ -1,8 +1,11 @@
+from constants.constants_slr import RUNNER_OK
 from lexer import Lexer
 from lexer import Token
 from SLR1 import SLR
+from lexer_exceptions.lexer_exception import LexerException
 from runner import runner
 from rules import RULES
+from slr_exceptions.slr_exception import SLRException, SLRRunnerException
 
 
 def main():
@@ -17,11 +20,10 @@ def main():
 
         runner(slr, lexer_list, slr.rules)
 
-    except Exception as e:
-        print(e.args)
-        return "Не подходит"
-    else:
-        return "Подходит"
+    except (LexerException, SLRException, SLRRunnerException) as e:
+        print(e)
+        return e
+    return RUNNER_OK
 
 
 if __name__ == "__main__":

@@ -3,7 +3,6 @@ END_SYMBOL = "$"
 
 RULE_DIVIDER = " "
 
-RUNNER_FAIL = 0
-RUNNER_OK = 1
+RUNNER_OK = "OK"
 
 RUNNER_ERROR = "Runner Error"

@@ -1,21 +1,22 @@
-from constants_lex import *
+from dataclasses import dataclass
+from constants.constants_lex import *
+from lexer_exceptions.exceptions_enum import LexerErrId
+from lexer_exceptions.lexer_exception import LexerException
 
 
+@dataclass()
 class Token:
-    def __init__(self, word: str, token: str, row: int, column: int):
-        self.word: str = word
-        self.token: str = token
-        self.row: int = row
-        self.column: int = column
+    word: str
+    token: str
+    row: int
+    column: int
 
-    def __repr__(self):
-        word = self.word.ljust(PRINT_WORD_LENGTH)  # align data
+    def __repr__(self):  # prettier representation of data for debug
+        word = self.word.replace("\n", "\\n")  # to not see line brakes
+        word = word.ljust(PRINT_WORD_LENGTH)  # align data
         row = str(self.row).ljust(PRINT_WORD_ROW)
         col = str(self.column).ljust(PRINT_WORD_COLUMN)
-        return f"row: {row} col: {col}  word: {word}  token: {self.token}"
-
-    def __eq__(self, other):
-        return self.token == other.token and self.word == other.word and self.row == other.row and self.column == other.column
+        return f"Token(row: {row} col: {col}  word: {word}  token: {self.token})"
 
 
 class Lexer:
@@ -32,18 +33,18 @@ class Lexer:
         def state_error(symbol, word, row, column):
             if symbol in STOP_POINTS:
                 self.list.append(Token(word[0], ERROR_NAME, row, column))
+                raise LexerException(LexerErrId.UNEXPECTED_SYMBOL, word[0], row, column)
                 word[0] = ""
-                raise Exception("Lexer's unexpected symbol", f"{self.list[-1]}")
                 # return state_start(symbol, word, row, column)
             else:
                 return state_error
 
         def state_unary_stop_symbol(symbol, word, row, column):
-            if dictionary.get(word[0], False):
+            if IDS.get(word[0], False):
                 if word[0] == " " and not show_spaces:
                     pass
                 else:
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -51,14 +52,14 @@ class Lexer:
             if symbol == "=":
                 return state_dual_stop_symbol
             else:
-                if dictionary.get(word[0], False):
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                if IDS.get(word[0], False):
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
         def state_dual_stop_symbol(symbol, word, row, column):
-            if dictionary.get(word[0], False):
-                self.list.append(Token(word[0], dictionary[word[0]], row, column))
+            if IDS.get(word[0], False):
+                self.list.append(Token(word[0], IDS[word[0]], row, column))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -68,8 +69,8 @@ class Lexer:
             elif symbol == "*":
                 return state_multi_comment
             else:
-                if dictionary.get(word[0], False):
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                if IDS.get(word[0], False):
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -99,8 +100,8 @@ class Lexer:
             if symbol in LETTERS + NUMBERS + "_":
                 return state_identifier
             else:
-                if dictionary.get(word[0], False):
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                if IDS.get(word[0], False):
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
                 else:
                     self.list.append(Token(word[0], ID_NAME, row, column))
                 word[0] = ""
@@ -220,14 +221,14 @@ class Lexer:
             if symbol == "&":
                 return state_and
             else:
-                if dictionary.get(word[0], False):
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                if IDS.get(word[0], False):
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
                 word[0] = ""
                 return state_error(symbol, word, row, column)
 
         def state_and(symbol, word, row, column):
-            if dictionary.get(word[0], False):
-                self.list.append(Token(word[0], dictionary[word[0]], row, column))
+            if IDS.get(word[0], False):
+                self.list.append(Token(word[0], IDS[word[0]], row, column))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -235,14 +236,14 @@ class Lexer:
             if symbol == "|":
                 return state_or
             else:
-                if dictionary.get(word[0], False):
-                    self.list.append(Token(word[0], dictionary[word[0]], row, column))
+                if IDS.get(word[0], False):
+                    self.list.append(Token(word[0], IDS[word[0]], row, column))
                 word[0] = ""
                 return state_error(symbol, word, row, column)
 
         def state_or(symbol, word, row, column):
-            if dictionary.get(word[0], False):
-                self.list.append(Token(word[0], dictionary[word[0]], row, column))
+            if IDS.get(word[0], False):
+                self.list.append(Token(word[0], IDS[word[0]], row, column))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -293,17 +294,13 @@ class Lexer:
 
         def check_for_type_length_limit():
             for elem in self.list:
-                if elem.token in MAX_LENGTH_OF_TYPES:
-                    if len(elem.word) > MAX_LENGTH_OF_TYPES[elem.token]:
-                        elem.token = ERROR_NAME
+                if elem.token in MAX_LENGTH_OF_TYPES and len(elem.word) > MAX_LENGTH_OF_TYPES[elem.token]:
+                    # elem.token = ERROR_NAME  # not actually useful right now with exceptions
+                    raise LexerException(LexerErrId.VALUE_IS_TOO_LARGE, elem.word, elem.row, elem.column)
 
         actual_run()
         check_for_type_length_limit()
 
     def show(self):
         for i in self.list:
-            word = i.word.replace("\n", "\\n")  # to not see line brakes
-            word = word.ljust(PRINT_WORD_LENGTH)  # align data
-            row = str(i.row).ljust(PRINT_WORD_ROW)
-            col = str(i.column).ljust(PRINT_WORD_COLUMN)
-            print(f"row: {row} col: {col}  word: {word}  token: {i.token}")
+            print(i)

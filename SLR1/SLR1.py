@@ -1,6 +1,8 @@
-from SLR_list_to_DF import DF
-from pretty_table import pretty_2d_table
+from utils.SLR_list_to_DF import DF
+from utils.pretty_table import pretty_2d_table
 from interfaces.slr_interfaces import *
+from slr_exceptions.exceptions_enum import SLRErrId
+from slr_exceptions.slr_exception import SLRException, SLRRunnerException
 
 
 def list_append(table: list[any], thing: any):
@@ -210,7 +212,7 @@ class SLR:
     def check_if_it_slr(slr_table: list[list[list[Word]]]):
         for row_num in range(1, len(slr_table)):
             row = slr_table[row_num]
-            for cell in row[1:]:
+            for cell_num, cell in enumerate(row[1:]):
                 if len(cell) >= 2:
                     move = False
                     fold = False
@@ -220,21 +222,25 @@ class SLR:
                             if not fold:
                                 fold = True
                             else:
-                                raise Exception(f"Non SLR Grammar \n \n {cell} in {row_num}th pos {row[0]} nonterm")
+                                raise SLRException(SLRErrId.DOUBLE_FOLD_IN_ONE_CELL, str(cell), str(row[0]),
+                                                   str(slr_table[0][cell_num]))
                         else:
                             move = True
 
                     if move and fold:
-                        raise Exception(f"Non SLR Grammar \n \n {cell} in {row_num}th pos {row[0]} nonterm")
+                        raise SLRException(SLRErrId.MOVE_AND_FOLD_IN_ONE_CELL, str(cell), str(row[0]),
+                                           str(slr_table[0][cell_num]))
 
-    def runner(self, slr_table: DF, input: list[str], rules: list[Rule], show_parse: bool = False):
+    def runner_for_list_of_strings(self, slr_table: DF, input: list[str], rules: list[Rule], show_parse: bool = False):
 
         nonterms = [i.left for i in rules]
-        if any([i in nonterms for i in input]):
-            raise Exception(RUNNER_ERROR, "ИНПУТ СТАК НЕ ВАЛИДЕН, в него затесался нетерминал")
+        for i, v in enumerate(input):
+            if v in nonterms:
+                raise SLRRunnerException(SLRErrId.NONTERMINAL_IN_INPUT_STACK, v, 0, i)
 
-        rules_length = {i+1: len(v.right) - (i == 0 or v.right[0].type == WordType.EMPTY) for i, v in enumerate(rules)}
-        word_by_indexes = {i+1: v.left for i, v in enumerate(rules)}
+        rules_length = {i + 1: len(v.right) - (i == 0 or v.right[0].type == WordType.EMPTY) for i, v in
+                        enumerate(rules)}
+        word_by_indexes = {i + 1: v.left for i, v in enumerate(rules)}
 
         input_stack = input[::-1]
         left_stack = []
@@ -245,13 +251,13 @@ class SLR:
 
         while right_stack != [[self.starter_word], [self.ok_word]] or left_stack != [self.starter_word.str]:
             if not input_stack:
-                raise Exception(RUNNER_ERROR, "ИНПУТ СТАК ПУСТ, а нам из него еще данные брать хотелось")
-            elif not (elem := input_stack[-1]) in slr_table.df:
-                raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, он отсутствует в SLR '{elem}'")
-            elif not (elem := str(right_stack[-1])) in slr_table.df.index:
-                raise Exception(RUNNER_ERROR, f"ИНПУТ СИМВОЛ ВНЕ ГРАММАТИКИ, он отсутствует в SLR '{elem}'")
+                raise SLRRunnerException(SLRErrId.EMPTY_INPUT_STACK)
+            elif not (elemToken := input_stack[-1]) in slr_table.df:
+                raise SLRRunnerException(SLRErrId.NON_GRAMMAR_SYMBOL_TOKEN, elemToken)
+            elif not (elemIndex := str(right_stack[-1])) in slr_table.df.index:
+                raise SLRRunnerException(SLRErrId.NON_GRAMMAR_SYMBOL_WORD, elemIndex)
             elif not (next_move := slr_table.get(right_stack[-1], input_stack[-1])):
-                raise Exception(RUNNER_ERROR, "НЕТ ДАЛЬНЕЙШЕГО ХОДА, наступили на пустую ячейку")
+                raise SLRRunnerException(SLRErrId.NOWHERE_TO_MOVE_NEXT, str(next_move), elemIndex, elemToken)
             else:
                 if next_move[0].type == WordType.FOLD:
                     for i in range(rules_length[next_move[0].row]):
@@ -295,10 +301,9 @@ class SLR:
 
     def run(self, input_text: list[str], show_err: bool = False, show_parsing: bool = False):
         try:
-            self.runner(self.df, input_text, self.rules, show_parsing)
-        except Exception as e:
+            self.runner_for_list_of_strings(self.df, input_text, self.rules, show_parsing)
+        except (SLRException, SLRRunnerException) as e:
             if show_err:
                 print(e)
-            return "Не Подходит"
-        else:
-            return "Подходит"
+            return e
+        return RUNNER_OK
