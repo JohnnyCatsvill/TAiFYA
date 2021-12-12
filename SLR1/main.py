@@ -9,7 +9,7 @@ def main():
         a3: callable = lambda x, y: x+y
 
     RULES = [
-        ["S", ["A B C $"], [None, None, F.a1, None]],
+        ["S", ["A B C $"], [[None, None, F.a1, None]]],
         ["A", ["A a"]],
         ["A", ["e"]],
         ["B", ["B b"]],

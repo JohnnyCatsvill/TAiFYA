@@ -1,6 +1,10 @@
+import graphviz
+
 from SLR1 import Rule, SLR
 from SLR1 import WordType
 from constants.constants_slr import *
+from functions import f
+from id_generator import get_id, generator
 from lexer import Token
 from slr_exceptions.slr_exception import SLRException, SLRRunnerException
 from slr_exceptions.exceptions_enum import SLRErrId
@@ -11,17 +15,22 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
     starter_word = slr.starter_word
     ok_word = slr.ok_word
 
-    nonterms = [i.left for i in rules]
-    for i, v in enumerate(lexer):
-        if v.token in nonterms:
-            raise SLRException(SLRErrId.NONTERMINAL_IN_INPUT_STACK, v.word, v.row, v.column)
+    # This could not be valid check, but i could be wrong
+    # nonterms = [i.left for i in rules]
+    # for i, v in enumerate(lexer):
+    #     if v.token in nonterms:
+    #         raise SLRException(SLRErrId.NONTERMINAL_IN_INPUT_STACK, v.word, v.row, v.column)
 
     rules_length = {i + 1: len(v.right) - (i == 0 or v.right[0].type == WordType.EMPTY) for i, v in enumerate(rules)}
-    indexes_to_words = {i + 1: Token("X", v.left, 0, 0) for i, v in enumerate(rules)}
+    # indexes_to_words = {i + 1: Token("X", v.left, 0, 0, get_id()) for i, v in enumerate(rules)}
 
     input_stack = lexer[::-1]
     left_stack = []
     right_stack = [[starter_word]]
+
+    function_args = {i: [] for i in f}
+
+    dot = graphviz.Digraph(comment='The Round Table')
 
     if show_parse:
         print(f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
@@ -36,11 +45,39 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
         elif not (next_move := slr_table.get(right_stack[-1], input_stack[-1].token)):
             raise SLRRunnerException(SLRErrId.NOWHERE_TO_MOVE_NEXT, str(next_move), elemIndex, elemToken.token)
         else:
+            # if next_move[0].type == WordType.FOLD:
+            #     for i in range(rules_length[next_move[0].row]):  # pop x times
+            #         left_stack.pop()
+            #         right_stack.pop()
+            #     input_stack.append(indexes_to_words[next_move[0].row])
             if next_move[0].type == WordType.FOLD:
+                popped_left = []
+                popped_right = []
                 for i in range(rules_length[next_move[0].row]):  # pop x times
-                    left_stack.pop()
-                    right_stack.pop()
-                input_stack.append(indexes_to_words[next_move[0].row])
+                    popped_left.append(left_stack.pop())
+                    popped_right.append(right_stack.pop())
+
+                popped_left = popped_left[::-1]
+                popped_right = popped_right[::-1]
+                result = dict()
+                for r, l in zip(popped_right, popped_left):
+                    for i in r:
+                        for a in i.action:
+                            function_args[a].append(l.values)
+
+                            if len(function_args[a]) >= f[a].arg_length:
+                                result = f[a].f(function_args[a])
+
+                new_token = Token("X", rules[next_move[0].row - 1].left, 0, 0, next(generator), result)
+                input_stack.append(new_token)
+
+                dot.node(str(new_token.graphviz_id), new_token.word + " as " + new_token.token)
+                for i in popped_left:
+                    node_name = f"{i.word if i.word != 'X' else ''} {i.token}{' v=' + str(i.values.get('val')) if i.values.get('val') else ''}{' t=' + i.values.get('type') if i.values.get('type') else ''}"
+                    dot.node(str(i.graphviz_id), node_name)
+                    dot.edge(str(i.graphviz_id), str(new_token.graphviz_id))
+                # input_stack.append(indexes_to_words[next_move[0].row])
+                function_args = {i: [] for i in f}
             else:
                 left_stack.append(input_stack.pop())
                 right_stack.append(next_move)
@@ -48,76 +85,6 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
             if show_parse:
                 print("\n" + f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")
 
+    # print(dot.source)
+    dot.render('doctest-output/round-table.gv', view=True)
     return RUNNER_OK
-
-# def runner(slr_table: list[list[list[Word]]],
-#            lexer: list[Token],
-#            rules: list[Rule],
-#            show: bool = False):
-#
-#     dict_of_rule_length = {i + 1: len(rules[i].right) - (i == 0 or rules[i].right[0].type == WordType.EMPTY) for i in range(len(rules))}
-#     dict_of_rule_letters = {i + 1: Token("X", rules[i].left, 0, 0) for i in range(len(rules))}
-#
-#     input_stack = lexer[::-1]
-#     nonterms = [i.left for i in rules]
-#     if any([i in nonterms for i in lexer]):
-#         if show:
-#             print("в входные данные затесался нетерминал")
-#         return RUNNER_FAIL
-#
-#     left_stack = []
-#     right_stack = [[Word(WordType.STARTER, rules[0].left, 0, 0)]]
-#
-#     if show:
-#         print("разбор  INPUT-", input_stack, "  RIGHT-", right_stack, "  LEFT-", left_stack)
-#
-#     while right_stack[-1] != [Word(WordType.OK_WORD, "OK", 0)]:
-#         for row in slr_table:
-#             if row[0] == right_stack[-1]:
-#                 cell_num = 0
-#                 for cell_num in range(1, len(slr_table[0])):
-#                     if not input_stack:
-#                         if show:
-#                             print("НЕ ПОДХОДИТ, пустой инпут стак, а конца так и не видно")
-#                         return RUNNER_FAIL
-#
-#                     if slr_table[0][cell_num] == input_stack[-1].token:
-#                         if not row[cell_num]:
-#                             if show:
-#                                 print("НЕ ПОДХОДИТ, наступили на ячейку где нет следующего хода")
-#                             return RUNNER_FAIL
-#                         else:
-#
-#                             if len(row[cell_num]) > 1:
-#                                 left_stack.append(input_stack.pop())
-#                                 right_stack.append(row[cell_num])
-#                             else:
-#                                 if row[cell_num][0].type == WordType.FOLD:
-#
-#                                     for i in range(dict_of_rule_length[row[cell_num][0].row]):
-#                                         left_stack.pop()
-#                                         right_stack.pop()
-#                                     input_stack.append(dict_of_rule_letters[row[cell_num][0].row])
-#                                 else:
-#                                     left_stack.append(input_stack.pop())
-#                                     right_stack.append(row[cell_num])
-#                         cell_num -= 1
-#                         break
-#                 if cell_num + 1 == len(slr_table[0]):
-#                     if show:
-#                         print("НЕ ПОДХОДИТ")
-#                     return RUNNER_FAIL
-#                 break
-#         if show:
-#             print()
-#             print("разбор  INPUT-", input_stack, "  RIGHT-", right_stack, "  LEFT-", left_stack)
-#
-#     last = [Token("X", rules[0].left, 0, 0)]
-#     if len(left_stack) == len(last) and left_stack[0].token == last[0].token and left_stack[0].word == last[0].word:
-#         if show:
-#             print("ПОДХОДИТ")
-#         return RUNNER_OK
-#     else:
-#         if show:
-#             print(f"НЕ ПОДХОДИТ, в стаке валяются лишние символы -> {left_stack[1:]}")
-#         return RUNNER_FAIL

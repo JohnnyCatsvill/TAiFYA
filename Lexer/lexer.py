@@ -1,15 +1,21 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from constants.constants_lex import *
+from id_generator import get_id, generator
 from lexer_exceptions.exceptions_enum import LexerErrId
 from lexer_exceptions.lexer_exception import LexerException
+import graphviz
 
 
-@dataclass()
 class Token:
-    word: str
-    token: str
-    row: int
-    column: int
+
+    def __init__(self, value: any, token: str, row: int = 0, column: int = 0, graphviz_id: int = 0,
+                 values: dict[str, any] = dict()):
+        self.word: any = value
+        self.token: str = token
+        self.values: dict[str, any] = values
+        self.row: int = row
+        self.column: int = column
+        self.graphviz_id: int = graphviz_id
 
     def __repr__(self):  # prettier representation of data for debug
         word = self.word.replace("\n", "\\n")  # to not see line brakes
@@ -17,6 +23,14 @@ class Token:
         row = str(self.row).ljust(PRINT_WORD_ROW)
         col = str(self.column).ljust(PRINT_WORD_COLUMN)
         return f"Token(row: {row} col: {col}  word: {word}  token: {self.token})"
+
+    def __eq__(self, other):
+        return all([
+            self.token == other.token,
+            self.word == other.word,
+            self.row == other.row,
+            self.column == other.column,
+        ])
 
 
 class Lexer:
@@ -32,9 +46,9 @@ class Lexer:
 
         def state_error(symbol, word, row, column):
             if symbol in STOP_POINTS:
-                self.list.append(Token(word[0], ERROR_NAME, row, column))
+                self.list.append(Token(word[0], ERROR_NAME, row, column, next(generator)))
                 raise LexerException(LexerErrId.UNEXPECTED_SYMBOL, word[0], row, column)
-                word[0] = ""
+                # word[0] = ""
                 # return state_start(symbol, word, row, column)
             else:
                 return state_error
@@ -44,7 +58,7 @@ class Lexer:
                 if word[0] == " " and not show_spaces:
                     pass
                 else:
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -53,13 +67,13 @@ class Lexer:
                 return state_dual_stop_symbol
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
         def state_dual_stop_symbol(symbol, word, row, column):
             if IDS.get(word[0], False):
-                self.list.append(Token(word[0], IDS[word[0]], row, column))
+                self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -70,13 +84,13 @@ class Lexer:
                 return state_multi_comment
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
         def state_comment(symbol, word, row, column):
             if symbol == "\n":
-                self.list.append(Token(word[0], COMMENT_NAME, row, column))
+                self.list.append(Token(word[0], COMMENT_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
             else:
@@ -90,7 +104,7 @@ class Lexer:
 
         def state_multi_comment_exit(symbol, word, row, column):
             if symbol == "/":
-                self.list.append(Token(word[0], COMMENT_NAME, row, column))
+                self.list.append(Token(word[0], COMMENT_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start
             else:
@@ -101,9 +115,9 @@ class Lexer:
                 return state_identifier
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
                 else:
-                    self.list.append(Token(word[0], ID_NAME, row, column))
+                    self.list.append(Token(word[0], ID_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -113,7 +127,7 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], HEX_NAME, row, column))
+                self.list.append(Token(word[0], HEX_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -123,7 +137,7 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], BIN_NAME, row, column))
+                self.list.append(Token(word[0], BIN_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -133,7 +147,7 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], OCT_NAME, row, column))
+                self.list.append(Token(word[0], OCT_NAME, row, column, next(generator)))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -145,7 +159,8 @@ class Lexer:
             elif symbol in LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], FLOAT_NAME, row, column))
+                self.list.append(Token(word[0], FLOAT_NAME, row, column, next(generator),
+                                       {"val": float(word[0]), "type": FLOAT_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -177,7 +192,8 @@ class Lexer:
             elif symbol in LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], FLOAT_NAME, row, column))
+                self.list.append(Token(word[0], FLOAT_NAME, row, column, next(generator),
+                                       {"val": float(word[0]), "type": FLOAT_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -185,7 +201,8 @@ class Lexer:
             if symbol in LETTERS + NUMBERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], FLOAT_NAME, row, column))
+                self.list.append(Token(word[0], FLOAT_NAME, row, column, next(generator),
+                                       {"val": float(word[0]), "type": FLOAT_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -201,7 +218,8 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], DEC_NAME, row, column))
+                self.list.append(
+                    Token(word[0], DEC_NAME, row, column, next(generator), {"val": int(word[0]), "type": DEC_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -213,7 +231,8 @@ class Lexer:
             elif symbol in LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], DEC_NAME, row, column))
+                self.list.append(
+                    Token(word[0], DEC_NAME, row, column, next(generator), {"val": int(word[0]), "type": DEC_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -222,13 +241,13 @@ class Lexer:
                 return state_and
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
                 word[0] = ""
                 return state_error(symbol, word, row, column)
 
         def state_and(symbol, word, row, column):
             if IDS.get(word[0], False):
-                self.list.append(Token(word[0], IDS[word[0]], row, column))
+                self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
             word[0] = ""
             return state_start(symbol, word, row, column)
 
@@ -237,15 +256,23 @@ class Lexer:
                 return state_or
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
                 word[0] = ""
                 return state_error(symbol, word, row, column)
 
         def state_or(symbol, word, row, column):
             if IDS.get(word[0], False):
-                self.list.append(Token(word[0], IDS[word[0]], row, column))
+                self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
             word[0] = ""
             return state_start(symbol, word, row, column)
+
+        def state_string(symbol, word, row, column):
+            if symbol == '"':
+                self.list.append(Token(word[0], STRING_NAME, row, column, next(generator)))
+                word[0] = ""
+                return state_start(symbol, word, row, column)
+            else:
+                return state_string
 
         def state_start(symbol, word, row, column):
             if symbol in LETTERS:
@@ -266,6 +293,8 @@ class Lexer:
                 return state_and_not_sure
             elif symbol == "|":
                 return state_or_not_sure
+            elif symbol == '"':
+                return state_string
             else:
                 return state_error
 

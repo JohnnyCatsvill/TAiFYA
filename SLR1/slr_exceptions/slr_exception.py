@@ -12,7 +12,10 @@ class SLRException(Exception):
         return self.code == other.code
 
     def __str__(self):
-        return f"LexerException: at {self.row}/{self.column} on word '{self.word}' exception of '{self.code.value}'"
+        return f"""SLRException: 
+    at row = {self.row} / col = {self.column} 
+    on word '{self.word}' 
+    exception of '{self.code.value}'"""
 
 
 class SLRRunnerException(Exception):

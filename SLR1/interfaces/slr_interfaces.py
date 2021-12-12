@@ -15,7 +15,7 @@ class WordType(Enum):
 
 class Word:
     def __init__(self, word_type: WordType, word: str, row: int = 0, column: int = 0, e_fold: int = 0,
-                 action: list[list[str]] = None):
+                 action: list[list[str]] = []):
         self.type: WordType = word_type
         self.str: str = word
         self.row: int = row
@@ -92,7 +92,7 @@ def parse_all_rules(rules: list[list[str, list[str], list[list[str]]]]) -> list[
 
         parsed_right = right.split(RULE_DIVIDER)
         while len(actions) < len(parsed_right):
-            actions.append(None)
+            actions.append([])
 
         output_right = []
         for word_index in range(len(parsed_right)):

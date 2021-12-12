@@ -1,4 +1,5 @@
 from constants.constants_slr import RUNNER_OK
+from id_generator import get_id
 from lexer import Lexer
 from lexer import Token
 from SLR1 import SLR
@@ -21,7 +22,6 @@ def main():
         runner(slr, lexer_list, slr.rules)
 
     except (LexerException, SLRException, SLRRunnerException) as e:
-        print(e)
         return e
     return RUNNER_OK
 

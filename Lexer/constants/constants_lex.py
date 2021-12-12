@@ -11,12 +11,12 @@ IDS = {
     "fixed": "type",
 
     "main": "entry_point",
-    "(": "bracket_smooth_l",
-    ")": "bracket_smooth_r",
-    "{": "bracket_curve_l",
-    "}": "bracket_curve_r",
-    "[": "bracket_rect_l",
-    "]": "bracket_rect_r",
+    "(": "(",
+    ")": ")",
+    "{": "{",
+    "}": "}",
+    "[": "[",
+    "]": "]",
     ";": "divider",
     "read": "reader",
     "print": "printer",
@@ -49,7 +49,7 @@ IDS = {
     " ": "separator",
     "\n": "new_line",
 
-    "if": "condition",
+    "if": "condition_start",
     "else": "condition_else",
     "while": "cycle"
 }
@@ -81,6 +81,7 @@ OCT_NAME = "OCT"
 BIN_NAME = "BIN"
 DEC_NAME = "INT"
 FLOAT_NAME = "FLOAT"
+STRING_NAME = "STRING"
 
 MAX_LENGTH_OF_TYPES = {
     DEC_NAME: 11,
