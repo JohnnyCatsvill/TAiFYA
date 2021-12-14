@@ -115,9 +115,9 @@ class Lexer:
                 return state_identifier
             else:
                 if IDS.get(word[0], False):
-                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator)))
+                    self.list.append(Token(word[0], IDS[word[0]], row, column, next(generator), {"val": word[0]}))
                 else:
-                    self.list.append(Token(word[0], ID_NAME, row, column, next(generator)))
+                    self.list.append(Token(word[0], ID_NAME, row, column, next(generator), {"val": word[0]}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -127,7 +127,8 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], HEX_NAME, row, column, next(generator)))
+                self.list.append(
+                    Token(word[0], HEX_NAME, row, column, next(generator), {"val": int(word[0], 16), "type": HEX_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -137,7 +138,8 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], BIN_NAME, row, column, next(generator)))
+                self.list.append(
+                    Token(word[0], BIN_NAME, row, column, next(generator), {"val": int(word[0], 2), "type": BIN_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 
@@ -147,7 +149,8 @@ class Lexer:
             elif symbol in NUMBERS + LETTERS:
                 return state_error(symbol, word, row, column)
             else:
-                self.list.append(Token(word[0], OCT_NAME, row, column, next(generator)))
+                self.list.append(
+                    Token(word[0], OCT_NAME, row, column, next(generator), {"val": int(word[0], 8), "type": OCT_NAME}))
                 word[0] = ""
                 return state_start(symbol, word, row, column)
 

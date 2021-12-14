@@ -7,6 +7,7 @@ from lexer_exceptions.lexer_exception import LexerException
 from runner import runner
 from rules import RULES
 from slr_exceptions.slr_exception import SLRException, SLRRunnerException
+from vac_exceptions.vac_exception import VACException
 
 
 def main():
@@ -21,7 +22,7 @@ def main():
 
         runner(slr, lexer_list, slr.rules)
 
-    except (LexerException, SLRException, SLRRunnerException) as e:
+    except (LexerException, SLRException, SLRRunnerException, VACException) as e:
         return e
     return RUNNER_OK
 

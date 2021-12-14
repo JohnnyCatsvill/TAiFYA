@@ -114,3 +114,4 @@ dmypy.json
 .pyre/
 SLR1/.idea/vcs.xml
 Lexer/.idea/vcs.xml
+LexAndSLR/doctest-output/round-table.gv.pdf
