@@ -73,14 +73,26 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
 
                 dot.node(str(new_token.graphviz_id), new_token.word + " as " + new_token.token)
                 for i in popped_left:
-                    node_name = f"{i.word if i.word != 'X' else ''} {i.token}{' v=' + str(i.values.get('val')) if i.values.get('val') else ''}{' t=' + i.values.get('type') if i.values.get('type') else ''}"
+                    node_name = ""
+                    if i.values:
+                        node_name = f"{i.word if i.word != 'X' else ''} {i.token}{' v=' + str(i.values.get('val')) if i.values.get('val') else ''}{' t=' + i.values.get('type') if i.values.get('type') else ''}"
+                    else:
+                        node_name = f"{i.word if i.word != 'X' else ''} {i.token}"
                     dot.node(str(i.graphviz_id), node_name)
                     dot.edge(str(i.graphviz_id), str(new_token.graphviz_id))
                 # input_stack.append(indexes_to_words[next_move[0].row])
                 function_args = {i: [] for i in f}
             else:
-                left_stack.append(input_stack.pop())
+                token = input_stack.pop()
+                left_stack.append(token)
                 right_stack.append(next_move)
+
+                for i in next_move:
+                    for a in i.action2:
+                        function_args[a].append(token.values)
+
+                        if len(function_args[a]) >= f[a].arg_length:
+                            result = f[a].f(function_args[a])
 
             if show_parse:
                 print("\n" + f"разбор  INPUT-{input_stack}  RIGHT-{right_stack}  LEFT-{left_stack}")

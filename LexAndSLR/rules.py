@@ -1,7 +1,8 @@
 from constants.constants_lex import OCT_NAME, DEC_NAME, FLOAT_NAME, BIN_NAME, HEX_NAME, STRING_NAME
 
 RULES = [
-    ["PROGRAM", ["function_type entry_point ( ) { LIST_OF_COMMANDS } $"]],
+    ["PROGRAM", ["function_type entry_point ( ) { LIST_OF_COMMANDS } $"], [],
+     [[], [], [], [], ["block"], [], ["end_block"]]],
 
     ["LIST_OF_COMMANDS", ["COMMAND LIST_OF_COMMANDS"]],
     ["LIST_OF_COMMANDS", ["COMMAND"]],
@@ -12,16 +13,20 @@ RULES = [
     ["COMMAND", ["ID assign EXPRESSION divider"], [["assign"], [], ["assign"]]],
     ["COMMAND", ["ID assign CONDITION divider"]],
     ["COMMAND", ["ID assign LIST_OF_ELEMENTS divider"]],
-    ["COMMAND", ["condition_start ( CONDITION ) { LIST_OF_COMMANDS }"]],
-    ["COMMAND", ["condition_start ( CONDITION ) { LIST_OF_COMMANDS } condition_else { LIST_OF_COMMANDS }"]],
-    ["COMMAND", ["cycle ( CONDITION ) { LIST_OF_COMMANDS }"]],
+    ["COMMAND", ["condition_start ( CONDITION ) { LIST_OF_COMMANDS }"], [],
+     [[], [], [], [], ["block"], [], ["end_block"]]],
+    ["COMMAND", ["condition_start ( CONDITION ) { LIST_OF_COMMANDS } condition_else { LIST_OF_COMMANDS }"], [],
+     [[], [], [], [], ["block"], [], ["end_block"], [], ["block"], [], ["end_block"]]],
+    ["COMMAND", ["cycle ( CONDITION ) { LIST_OF_COMMANDS }"], [],
+     [[], [], [], [], ["block"], [], ["end_block"]]],
+    ["COMMAND", ["{ LIST_OF_COMMANDS }"], [["block"], [], ["end_block"]]],
 
     ["ANY_NUMBER", [OCT_NAME], [["pass"]]],
     ["ANY_NUMBER", [HEX_NAME], [["pass"]]],
     ["ANY_NUMBER", [BIN_NAME], [["pass"]]],
-    ["ANY_NUMBER", [FLOAT_NAME], [["pass"]] ],
+    ["ANY_NUMBER", [FLOAT_NAME], [["pass"]]],
     ["ANY_NUMBER", ["ID"], [["get_id_val"]]],
-    ["ANY_NUMBER", [DEC_NAME], [["pass"]] ],
+    ["ANY_NUMBER", [DEC_NAME], [["pass"]]],
 
 
     ["LIST_OF_ELEMENTS", ["[ LIST_OF_ELEMENTS2 ]"], [[], ["pass"]]],

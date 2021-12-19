@@ -21,15 +21,23 @@ void main() {
     f = [1, 3, 5, 0.5];
 
     if(i == 6) {  //condition
-        i = 5;
+        bool i;
+        i = True;
     }
     else { /* I want multicomment here
     and noone can stop me
     do this */
-        i = 6;
+        i = 7;
     }
 
     while(i < 10 && (i < 2 || i == 1)) { //cycle
+        int x;
+        float y;
+        float z;
+        x = 10;
+        y = 12.5;
+        z = x + y;
+
         i = -i + 1;
         i = 25;
     }

@@ -26,9 +26,19 @@ class VarsAndConst:
 
     def __repr__(self):
         output = str(self.blocks) + "\n"
-        for i in self.list:
-            output += str(i) + "\n"
+        for i, v in enumerate(self.list):
+            if i in self.blocks:
+                output += "-------------------\n"
+            output += str(v) + "\n"
         return output
+
+    def debug_print(self):
+        output = str(self.blocks) + "\n"
+        for i, v in enumerate(self.list):
+            if i in self.blocks:
+                output += "-------------------\n"
+            output += str(v) + "\n"
+        print(output)
 
     def add_block(self):
         self.blocks.append(len(self.list))

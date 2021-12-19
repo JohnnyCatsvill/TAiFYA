@@ -15,13 +15,14 @@ class WordType(Enum):
 
 class Word:
     def __init__(self, word_type: WordType, word: str, row: int = 0, column: int = 0, e_fold: int = 0,
-                 action: list[list[str]] = []):
+                 action: list[list[str]] = [], action2: list[list[str]] = []):
         self.type: WordType = word_type
         self.str: str = word
         self.row: int = row
         self.col: int = column
         self.e_fold: int = e_fold
         self.action: list[list[str]] = action
+        self.action2: list[list[str]] = action2
 
     def __hash__(self):
         return hash((self.str, self.type, self.row, self.col, self.e_fold))
@@ -89,10 +90,13 @@ def parse_all_rules(rules: list[list[str, list[str], list[list[str]]]]) -> list[
         left = rule[0]
         right = rule[1][0]
         actions = [] if len(rule) < 3 else rule[2]
+        actions2 = [] if len(rule) < 4 else rule[3]
 
         parsed_right = right.split(RULE_DIVIDER)
         while len(actions) < len(parsed_right):
             actions.append([])
+        while len(actions2) < len(parsed_right):
+            actions2.append([])
 
         output_right = []
         for word_index in range(len(parsed_right)):
@@ -101,7 +105,8 @@ def parse_all_rules(rules: list[list[str, list[str], list[list[str]]]]) -> list[
                         word_letters,
                         rule_index + 1,
                         word_index + 1,
-                        action=actions[word_index])
+                        action=actions[word_index],
+                        action2=actions2[word_index])
             output_right.append(word)
 
         list_of_rules.append(Rule(left, output_right))
