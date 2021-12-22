@@ -64,22 +64,38 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
                     for i in r:
                         for a in i.action:
                             function_args[a].append(l.values)
+                            if a == "pass":
+                                result.update({"last_node": l.values.get("last_node", l.graphviz_id)})
+                                result.update({"last_node_data": l.values.get("last_node_data", l.values)})
+                                result.update({"passing": True})
 
                             if len(function_args[a]) >= f[a].arg_length:
-                                result = f[a].f(function_args[a])
+                                result.update(f[a].f(function_args[a]))
+
+                if not result.get("passing"):
+                    result.update({"last_node": generator.current + 1})
+                    result.update({"last_node_data": result})
 
                 new_token = Token("X", rules[next_move[0].row - 1].left, 0, 0, next(generator), result)
                 input_stack.append(new_token)
 
-                dot.node(str(new_token.graphviz_id), new_token.word + " as " + new_token.token)
+                if not result.get("passing"):
+                    dot.node(str(new_token.graphviz_id), new_token.word + " as " + new_token.token)
+
                 for i in popped_left:
                     node_name = ""
                     if i.values:
                         node_name = f"{i.word if i.word != 'X' else ''} {i.token}{' v=' + str(i.values.get('val')) if i.values.get('val') else ''}{' t=' + i.values.get('type') if i.values.get('type') else ''}"
                     else:
                         node_name = f"{i.word if i.word != 'X' else ''} {i.token}"
-                    dot.node(str(i.graphviz_id), node_name)
-                    dot.edge(str(i.graphviz_id), str(new_token.graphviz_id))
+
+                    if not result.get("passing") and not i.values.get("passing"):
+                        dot.node(str(i.graphviz_id), node_name)
+                        dot.edge(str(i.graphviz_id), str(new_token.graphviz_id))
+                    elif not result.get("passing") and i.values.get("passing"):
+                        dot.node(str(i.values.get("last_node")), str(i.values.get("last_node_data").get("val")) + " " + i.values.get("last_node_data").get("type") )
+                        dot.edge(str(i.values.get("last_node")), str(new_token.graphviz_id))
+
                 # input_stack.append(indexes_to_words[next_move[0].row])
                 function_args = {i: [] for i in f}
             else:

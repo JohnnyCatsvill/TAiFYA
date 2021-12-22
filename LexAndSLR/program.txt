@@ -6,12 +6,14 @@ void main() {
     bool b;
 
     hex h;
-    oct o;
+    int o;
     bin bit;
     fixed fix;
 
     read(s);   //read write
     print( s );
+
+
 
     i = 06;    //assign
     i =0x7;
@@ -19,6 +21,12 @@ void main() {
     i=6;
     f = 0.50;
     f = [1, 3, 5, 0.5];
+    o = 2;
+
+    {
+        int i;
+        i = o + 2;
+    }
 
     if(i == 6) {  //condition
         bool i;

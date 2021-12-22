@@ -1,734 +1,622 @@
 // The Round Table
 digraph {
-	193 [label="X as COMMAND"]
+	216 [label="X as COMMAND"]
 	7 [label="int type v=int"]
-	7 -> 193
+	7 -> 216
 	8 [label="i ID v=i"]
-	8 -> 193
+	8 -> 216
 	9 [label="; divider"]
-	9 -> 193
-	194 [label="X as COMMAND"]
-	12 [label="float type v=float"]
-	12 -> 194
-	13 [label="f ID v=f"]
-	13 -> 194
-	14 [label="; divider"]
-	14 -> 194
-	195 [label="X as COMMAND"]
-	16 [label="string type v=string"]
-	16 -> 195
-	17 [label="s ID v=s"]
-	17 -> 195
-	18 [label="; divider"]
-	18 -> 195
-	196 [label="X as COMMAND"]
-	20 [label="bool type v=bool"]
-	20 -> 196
-	21 [label="b ID v=b"]
-	21 -> 196
-	22 [label="; divider"]
-	22 -> 196
-	197 [label="X as COMMAND"]
-	25 [label="hex type v=hex"]
-	25 -> 197
-	26 [label="h ID v=h"]
-	26 -> 197
-	27 [label="; divider"]
-	27 -> 197
-	198 [label="X as COMMAND"]
-	29 [label="oct type v=oct"]
-	29 -> 198
-	30 [label="o ID v=o"]
-	30 -> 198
-	31 [label="; divider"]
-	31 -> 198
-	199 [label="X as COMMAND"]
-	33 [label="bin type v=bin"]
-	33 -> 199
-	34 [label="bit ID v=bit"]
-	34 -> 199
-	35 [label="; divider"]
-	35 -> 199
-	200 [label="X as COMMAND"]
-	37 [label="fixed type v=fixed"]
-	37 -> 200
-	38 [label="fix ID v=fix"]
-	38 -> 200
-	39 [label="; divider"]
-	39 -> 200
-	201 [label="X as COMMAND"]
-	42 [label="read reader v=read"]
-	42 -> 201
-	43 [label="( ("]
-	43 -> 201
-	44 [label="s ID v=s"]
-	44 -> 201
-	45 [label=") )"]
-	45 -> 201
-	46 [label="; divider"]
-	46 -> 201
-	202 [label="X as COMMAND"]
-	49 [label="print printer v=print"]
-	49 -> 202
-	50 [label="( ("]
-	50 -> 202
-	51 [label="s ID v=s"]
-	51 -> 202
-	52 [label=") )"]
-	52 -> 202
-	53 [label="; divider"]
-	53 -> 202
-	203 [label="X as ANY_NUMBER"]
-	58 [label="06 oct v=6 t=oct"]
-	58 -> 203
-	204 [label="X as EXPRESSION3"]
-	203 [label=" ANY_NUMBER v=6 t=oct"]
-	203 -> 204
-	205 [label="X as EXPRESSION2"]
-	204 [label=" EXPRESSION3 v=6 t=oct"]
-	204 -> 205
-	206 [label="X as EXPRESSION"]
-	205 [label=" EXPRESSION2 v=6 t=oct"]
-	205 -> 206
-	207 [label="X as COMMAND"]
-	56 [label="i ID v=i"]
-	56 -> 207
-	57 [label="= assign"]
-	57 -> 207
-	206 [label=" EXPRESSION v=6 t=oct"]
-	206 -> 207
-	59 [label="; divider"]
-	59 -> 207
-	208 [label="X as ANY_NUMBER"]
-	64 [label="0x7 hex v=7 t=hex"]
-	64 -> 208
-	209 [label="X as EXPRESSION3"]
-	208 [label=" ANY_NUMBER v=7 t=hex"]
-	208 -> 209
-	210 [label="X as EXPRESSION2"]
-	209 [label=" EXPRESSION3 v=7 t=hex"]
-	209 -> 210
-	211 [label="X as EXPRESSION"]
-	210 [label=" EXPRESSION2 v=7 t=hex"]
-	210 -> 211
-	212 [label="X as COMMAND"]
-	62 [label="i ID v=i"]
-	62 -> 212
-	63 [label="= assign"]
-	63 -> 212
-	211 [label=" EXPRESSION v=7 t=hex"]
-	211 -> 212
-	65 [label="; divider"]
-	65 -> 212
-	213 [label="X as ANY_NUMBER"]
-	69 [label="0b01 bin v=1 t=bin"]
-	69 -> 213
-	214 [label="X as EXPRESSION3"]
-	213 [label=" ANY_NUMBER v=1 t=bin"]
-	213 -> 214
-	215 [label="X as EXPRESSION2"]
-	214 [label=" EXPRESSION3 v=1 t=bin"]
-	214 -> 215
-	216 [label="X as EXPRESSION"]
-	215 [label=" EXPRESSION2 v=1 t=bin"]
-	215 -> 216
+	9 -> 216
 	217 [label="X as COMMAND"]
-	67 [label="i ID v=i"]
-	67 -> 217
-	68 [label="= assign"]
-	68 -> 217
-	216 [label=" EXPRESSION v=1 t=bin"]
-	216 -> 217
-	70 [label="; divider"]
-	70 -> 217
-	218 [label="X as ANY_NUMBER"]
-	74 [label="6 int v=6 t=int"]
-	74 -> 218
-	219 [label="X as EXPRESSION3"]
-	218 [label=" ANY_NUMBER v=6 t=int"]
-	218 -> 219
-	220 [label="X as EXPRESSION2"]
-	219 [label=" EXPRESSION3 v=6 t=int"]
-	219 -> 220
-	221 [label="X as EXPRESSION"]
-	220 [label=" EXPRESSION2 v=6 t=int"]
-	220 -> 221
+	12 [label="float type v=float"]
+	12 -> 217
+	13 [label="f ID v=f"]
+	13 -> 217
+	14 [label="; divider"]
+	14 -> 217
+	218 [label="X as COMMAND"]
+	16 [label="string type v=string"]
+	16 -> 218
+	17 [label="s ID v=s"]
+	17 -> 218
+	18 [label="; divider"]
+	18 -> 218
+	219 [label="X as COMMAND"]
+	20 [label="bool type v=bool"]
+	20 -> 219
+	21 [label="b ID v=b"]
+	21 -> 219
+	22 [label="; divider"]
+	22 -> 219
+	220 [label="X as COMMAND"]
+	25 [label="hex type v=hex"]
+	25 -> 220
+	26 [label="h ID v=h"]
+	26 -> 220
+	27 [label="; divider"]
+	27 -> 220
+	221 [label="X as COMMAND"]
+	29 [label="int type v=int"]
+	29 -> 221
+	30 [label="o ID v=o"]
+	30 -> 221
+	31 [label="; divider"]
+	31 -> 221
 	222 [label="X as COMMAND"]
-	72 [label="i ID v=i"]
-	72 -> 222
-	73 [label="= assign"]
-	73 -> 222
-	221 [label=" EXPRESSION v=6 t=int"]
-	221 -> 222
-	75 [label="; divider"]
-	75 -> 222
-	223 [label="X as ANY_NUMBER"]
-	79 [label="0.50 float v=0.5 t=float"]
-	79 -> 223
-	224 [label="X as EXPRESSION3"]
-	223 [label=" ANY_NUMBER v=0.5 t=float"]
-	223 -> 224
-	225 [label="X as EXPRESSION2"]
-	224 [label=" EXPRESSION3 v=0.5 t=float"]
-	224 -> 225
-	226 [label="X as EXPRESSION"]
-	225 [label=" EXPRESSION2 v=0.5 t=float"]
-	225 -> 226
-	227 [label="X as COMMAND"]
-	77 [label="f ID v=f"]
-	77 -> 227
-	78 [label="= assign"]
-	78 -> 227
-	226 [label=" EXPRESSION v=0.5 t=float"]
-	226 -> 227
-	80 [label="; divider"]
-	80 -> 227
-	228 [label="X as ANY_NUMBER"]
-	85 [label="1 int v=1 t=int"]
-	85 -> 228
-	229 [label="X as ANY_NUMBER"]
-	87 [label="3 int v=3 t=int"]
-	87 -> 229
-	230 [label="X as ANY_NUMBER"]
-	89 [label="5 int v=5 t=int"]
-	89 -> 230
-	231 [label="X as ANY_NUMBER"]
-	91 [label="0.5 float v=0.5 t=float"]
-	91 -> 231
-	232 [label="X as LIST_OF_ELEMENTS2"]
-	231 [label=" ANY_NUMBER v=0.5 t=float"]
-	231 -> 232
-	233 [label="X as LIST_OF_ELEMENTS2"]
-	230 [label=" ANY_NUMBER v=5 t=int"]
-	230 -> 233
-	90 [label=", comma"]
-	90 -> 233
-	232 [label=" LIST_OF_ELEMENTS2 v=[0.5] t=float"]
-	232 -> 233
-	234 [label="X as LIST_OF_ELEMENTS2"]
-	229 [label=" ANY_NUMBER v=3 t=int"]
-	229 -> 234
-	88 [label=", comma"]
-	88 -> 234
-	233 [label=" LIST_OF_ELEMENTS2 v=[5, 0.5] t=float"]
-	233 -> 234
-	235 [label="X as LIST_OF_ELEMENTS2"]
-	228 [label=" ANY_NUMBER v=1 t=int"]
-	228 -> 235
-	86 [label=", comma"]
-	86 -> 235
-	234 [label=" LIST_OF_ELEMENTS2 v=[3, 5, 0.5] t=float"]
-	234 -> 235
-	236 [label="X as LIST_OF_ELEMENTS"]
-	84 [label="[ ["]
-	84 -> 236
-	235 [label=" LIST_OF_ELEMENTS2 v=[1, 3, 5, 0.5] t=float"]
-	235 -> 236
-	92 [label="] ]"]
-	92 -> 236
-	237 [label="X as COMMAND"]
-	82 [label="f ID v=f"]
-	82 -> 237
-	83 [label="= assign"]
-	83 -> 237
-	236 [label=" LIST_OF_ELEMENTS v=[1, 3, 5, 0.5] t=float"]
-	236 -> 237
-	93 [label="; divider"]
-	93 -> 237
-	238 [label="X as ANY_NUMBER"]
-	98 [label="i ID v=i"]
-	98 -> 238
-	239 [label="X as ANY_NUMBER"]
-	100 [label="6 int v=6 t=int"]
-	100 -> 239
-	240 [label="X as CONDITION3"]
-	238 [label=" ANY_NUMBER v=6 t=int"]
-	238 -> 240
-	99 [label="== binary_compare"]
-	99 -> 240
-	239 [label=" ANY_NUMBER v=6 t=int"]
-	239 -> 240
-	241 [label="X as CONDITION2"]
-	240 [label=" CONDITION3"]
-	240 -> 241
-	242 [label="X as CONDITION"]
-	241 [label=" CONDITION2"]
-	241 -> 242
-	243 [label="X as COMMAND"]
-	105 [label="bool type v=bool"]
-	105 -> 243
-	106 [label="i ID v=i"]
-	106 -> 243
-	107 [label="; divider"]
-	107 -> 243
-	244 [label="X as BOOL_NUMBER"]
-	111 [label="True boolean_true v=True"]
-	111 -> 244
-	245 [label="X as CONDITION3"]
-	244 [label=" BOOL_NUMBER"]
-	244 -> 245
-	246 [label="X as CONDITION2"]
-	245 [label=" CONDITION3"]
-	245 -> 246
-	247 [label="X as CONDITION"]
-	246 [label=" CONDITION2"]
-	246 -> 247
-	248 [label="X as COMMAND"]
-	109 [label="i ID v=i"]
-	109 -> 248
-	110 [label="= assign"]
-	110 -> 248
-	247 [label=" CONDITION"]
-	247 -> 248
-	112 [label="; divider"]
-	112 -> 248
-	249 [label="X as LIST_OF_COMMANDS"]
-	248 [label=" COMMAND"]
-	248 -> 249
-	250 [label="X as LIST_OF_COMMANDS"]
-	243 [label=" COMMAND t= i=None"]
-	243 -> 250
-	249 [label=" LIST_OF_COMMANDS"]
-	249 -> 250
-	251 [label="X as ANY_NUMBER"]
-	121 [label="7 int v=7 t=int"]
-	121 -> 251
-	252 [label="X as EXPRESSION3"]
-	251 [label=" ANY_NUMBER v=7 t=int"]
-	251 -> 252
-	253 [label="X as EXPRESSION2"]
-	252 [label=" EXPRESSION3 v=7 t=int"]
-	252 -> 253
-	254 [label="X as EXPRESSION"]
-	253 [label=" EXPRESSION2 v=7 t=int"]
-	253 -> 254
-	255 [label="X as COMMAND"]
-	119 [label="i ID v=i"]
-	119 -> 255
-	120 [label="= assign"]
-	120 -> 255
-	254 [label=" EXPRESSION v=7 t=int"]
-	254 -> 255
-	122 [label="; divider"]
-	122 -> 255
-	256 [label="X as LIST_OF_COMMANDS"]
-	255 [label=" COMMAND t= i=7"]
+	33 [label="bin type v=bin"]
+	33 -> 222
+	34 [label="bit ID v=bit"]
+	34 -> 222
+	35 [label="; divider"]
+	35 -> 222
+	223 [label="X as COMMAND"]
+	37 [label="fixed type v=fixed"]
+	37 -> 223
+	38 [label="fix ID v=fix"]
+	38 -> 223
+	39 [label="; divider"]
+	39 -> 223
+	224 [label="X as COMMAND"]
+	42 [label="read reader v=read"]
+	42 -> 224
+	43 [label="( ("]
+	43 -> 224
+	44 [label="s ID v=s"]
+	44 -> 224
+	45 [label=") )"]
+	45 -> 224
+	46 [label="; divider"]
+	46 -> 224
+	225 [label="X as COMMAND"]
+	49 [label="print printer v=print"]
+	49 -> 225
+	50 [label="( ("]
+	50 -> 225
+	51 [label="s ID v=s"]
+	51 -> 225
+	52 [label=") )"]
+	52 -> 225
+	53 [label="; divider"]
+	53 -> 225
+	230 [label="X as COMMAND"]
+	58 [label="i ID v=i"]
+	58 -> 230
+	59 [label="= assign"]
+	59 -> 230
+	60 [label="6 oct"]
+	60 -> 230
+	61 [label="; divider"]
+	61 -> 230
+	235 [label="X as COMMAND"]
+	64 [label="i ID v=i"]
+	64 -> 235
+	65 [label="= assign"]
+	65 -> 235
+	66 [label="7 hex"]
+	66 -> 235
+	67 [label="; divider"]
+	67 -> 235
+	240 [label="X as COMMAND"]
+	69 [label="i ID v=i"]
+	69 -> 240
+	70 [label="= assign"]
+	70 -> 240
+	71 [label="1 bin"]
+	71 -> 240
+	72 [label="; divider"]
+	72 -> 240
+	245 [label="X as COMMAND"]
+	74 [label="i ID v=i"]
+	74 -> 245
+	75 [label="= assign"]
+	75 -> 245
+	76 [label="6 int"]
+	76 -> 245
+	77 [label="; divider"]
+	77 -> 245
+	250 [label="X as COMMAND"]
+	79 [label="f ID v=f"]
+	79 -> 250
+	80 [label="= assign"]
+	80 -> 250
+	81 [label="0.5 float"]
+	81 -> 250
+	82 [label="; divider"]
+	82 -> 250
+	255 [label="X as LIST_OF_ELEMENTS2"]
+	93 [label="0.5 float"]
+	93 -> 255
+	256 [label="X as LIST_OF_ELEMENTS2"]
+	91 [label="5 int"]
+	91 -> 256
+	92 [label=", comma"]
+	92 -> 256
+	255 [label=" LIST_OF_ELEMENTS2 v=[0.5] t=float"]
 	255 -> 256
-	257 [label="X as COMMAND"]
-	96 [label="if condition_start v=if"]
-	96 -> 257
-	97 [label="( ("]
-	97 -> 257
-	242 [label=" CONDITION"]
-	242 -> 257
-	101 [label=") )"]
-	101 -> 257
-	102 [label="{ {"]
-	102 -> 257
-	250 [label=" LIST_OF_COMMANDS"]
-	250 -> 257
-	114 [label="} }"]
-	114 -> 257
-	116 [label="else condition_else v=else"]
-	116 -> 257
-	117 [label="{ {"]
-	117 -> 257
-	256 [label=" LIST_OF_COMMANDS"]
+	257 [label="X as LIST_OF_ELEMENTS2"]
+	89 [label="3 int"]
+	89 -> 257
+	90 [label=", comma"]
+	90 -> 257
+	256 [label=" LIST_OF_ELEMENTS2 v=[5, 0.5] t=float"]
 	256 -> 257
-	124 [label="} }"]
-	124 -> 257
-	258 [label="X as ANY_NUMBER"]
-	129 [label="i ID v=i"]
-	129 -> 258
-	259 [label="X as ANY_NUMBER"]
-	131 [label="10 int v=10 t=int"]
-	131 -> 259
-	260 [label="X as CONDITION3"]
-	258 [label=" ANY_NUMBER v=7 t=int"]
+	258 [label="X as LIST_OF_ELEMENTS2"]
+	87 [label="1 int"]
+	87 -> 258
+	88 [label=", comma"]
+	88 -> 258
+	257 [label=" LIST_OF_ELEMENTS2 v=[3, 5, 0.5] t=float"]
+	257 -> 258
+	260 [label="X as COMMAND"]
+	84 [label="f ID v=f"]
+	84 -> 260
+	85 [label="= assign"]
+	85 -> 260
+	258 [label="[1, 3, 5, 0.5] float"]
 	258 -> 260
-	130 [label="< binary_compare"]
-	130 -> 260
-	259 [label=" ANY_NUMBER v=10 t=int"]
-	259 -> 260
-	261 [label="X as CONDITION2"]
-	260 [label=" CONDITION3"]
-	260 -> 261
-	262 [label="X as ANY_NUMBER"]
-	134 [label="i ID v=i"]
-	134 -> 262
-	263 [label="X as ANY_NUMBER"]
-	136 [label="2 int v=2 t=int"]
-	136 -> 263
-	264 [label="X as CONDITION3"]
-	262 [label=" ANY_NUMBER v=7 t=int"]
-	262 -> 264
-	135 [label="< binary_compare"]
-	135 -> 264
-	263 [label=" ANY_NUMBER v=2 t=int"]
-	263 -> 264
-	265 [label="X as CONDITION2"]
-	264 [label=" CONDITION3"]
-	264 -> 265
-	266 [label="X as CONDITION"]
-	265 [label=" CONDITION2"]
-	265 -> 266
+	95 [label="; divider"]
+	95 -> 260
+	265 [label="X as COMMAND"]
+	97 [label="o ID v=o"]
+	97 -> 265
+	98 [label="= assign"]
+	98 -> 265
+	99 [label="2 int"]
+	99 -> 265
+	100 [label="; divider"]
+	100 -> 265
+	266 [label="X as COMMAND"]
+	105 [label="int type v=int"]
+	105 -> 266
+	106 [label="i ID v=i"]
+	106 -> 266
+	107 [label="; divider"]
+	107 -> 266
 	267 [label="X as ANY_NUMBER"]
-	138 [label="i ID v=i"]
-	138 -> 267
-	268 [label="X as ANY_NUMBER"]
-	140 [label="1 int v=1 t=int"]
-	140 -> 268
-	269 [label="X as CONDITION3"]
-	267 [label=" ANY_NUMBER v=7 t=int"]
-	267 -> 269
-	139 [label="== binary_compare"]
-	139 -> 269
-	268 [label=" ANY_NUMBER v=1 t=int"]
-	268 -> 269
-	270 [label="X as CONDITION2"]
-	269 [label=" CONDITION3"]
-	269 -> 270
-	271 [label="X as CONDITION"]
-	266 [label=" CONDITION"]
-	266 -> 271
-	137 [label="|| binary_or"]
-	137 -> 271
-	270 [label=" CONDITION2"]
-	270 -> 271
-	272 [label="X as CONDITION3"]
-	133 [label="( ("]
-	133 -> 272
-	271 [label=" CONDITION"]
-	271 -> 272
-	141 [label=") )"]
-	141 -> 272
-	273 [label="X as CONDITION2"]
-	261 [label=" CONDITION2"]
-	261 -> 273
-	132 [label="&& binary_and"]
-	132 -> 273
-	272 [label=" CONDITION3"]
-	272 -> 273
-	274 [label="X as CONDITION"]
-	273 [label=" CONDITION2"]
-	273 -> 274
+	111 [label="o ID v=o"]
+	111 -> 267
+	274 [label="X as EXPRESSION"]
+	267 [label="2 int"]
+	267 -> 274
+	112 [label="+ plus_symbol"]
+	112 -> 274
+	113 [label="2 int"]
+	113 -> 274
 	275 [label="X as COMMAND"]
-	146 [label="int type v=int"]
-	146 -> 275
-	147 [label="x ID v=x"]
-	147 -> 275
-	148 [label="; divider"]
-	148 -> 275
-	276 [label="X as COMMAND"]
-	150 [label="float type v=float"]
-	150 -> 276
-	151 [label="y ID v=y"]
-	151 -> 276
-	152 [label="; divider"]
-	152 -> 276
-	277 [label="X as COMMAND"]
-	154 [label="float type v=float"]
-	154 -> 277
-	155 [label="z ID v=z"]
-	155 -> 277
-	156 [label="; divider"]
-	156 -> 277
-	278 [label="X as ANY_NUMBER"]
-	160 [label="10 int v=10 t=int"]
-	160 -> 278
-	279 [label="X as EXPRESSION3"]
-	278 [label=" ANY_NUMBER v=10 t=int"]
-	278 -> 279
-	280 [label="X as EXPRESSION2"]
-	279 [label=" EXPRESSION3 v=10 t=int"]
-	279 -> 280
-	281 [label="X as EXPRESSION"]
-	280 [label=" EXPRESSION2 v=10 t=int"]
-	280 -> 281
-	282 [label="X as COMMAND"]
-	158 [label="x ID v=x"]
-	158 -> 282
-	159 [label="= assign"]
-	159 -> 282
-	281 [label=" EXPRESSION v=10 t=int"]
+	109 [label="i ID v=i"]
+	109 -> 275
+	110 [label="= assign"]
+	110 -> 275
+	274 [label=" EXPRESSION v=4 t=int"]
+	274 -> 275
+	114 [label="; divider"]
+	114 -> 275
+	276 [label="X as LIST_OF_COMMANDS"]
+	275 [label=" COMMAND t= i=4"]
+	275 -> 276
+	277 [label="X as LIST_OF_COMMANDS"]
+	266 [label=" COMMAND t= i=None"]
+	266 -> 277
+	276 [label=" LIST_OF_COMMANDS"]
+	276 -> 277
+	278 [label="X as COMMAND"]
+	103 [label="{ {"]
+	103 -> 278
+	277 [label=" LIST_OF_COMMANDS"]
+	277 -> 278
+	116 [label="} }"]
+	116 -> 278
+	279 [label="X as ANY_NUMBER"]
+	121 [label="i ID v=i"]
+	121 -> 279
+	281 [label="X as CONDITION3"]
+	279 [label=" ANY_NUMBER v=6 t=int"]
+	279 -> 281
+	122 [label="== binary_compare"]
+	122 -> 281
+	123 [label="6 int"]
+	123 -> 281
+	282 [label="X as CONDITION2"]
+	281 [label=" CONDITION3"]
 	281 -> 282
-	161 [label="; divider"]
-	161 -> 282
-	283 [label="X as ANY_NUMBER"]
-	165 [label="12.5 float v=12.5 t=float"]
-	165 -> 283
-	284 [label="X as EXPRESSION3"]
-	283 [label=" ANY_NUMBER v=12.5 t=float"]
-	283 -> 284
-	285 [label="X as EXPRESSION2"]
-	284 [label=" EXPRESSION3 v=12.5 t=float"]
-	284 -> 285
-	286 [label="X as EXPRESSION"]
-	285 [label=" EXPRESSION2 v=12.5 t=float"]
+	283 [label="X as CONDITION"]
+	282 [label=" CONDITION2"]
+	282 -> 283
+	284 [label="X as COMMAND"]
+	128 [label="bool type v=bool"]
+	128 -> 284
+	129 [label="i ID v=i"]
+	129 -> 284
+	130 [label="; divider"]
+	130 -> 284
+	285 [label="X as BOOL_NUMBER"]
+	134 [label="True boolean_true v=True"]
+	134 -> 285
+	286 [label="X as CONDITION3"]
+	285 [label=" BOOL_NUMBER"]
 	285 -> 286
-	287 [label="X as COMMAND"]
-	163 [label="y ID v=y"]
-	163 -> 287
-	164 [label="= assign"]
-	164 -> 287
-	286 [label=" EXPRESSION v=12.5 t=float"]
+	287 [label="X as CONDITION2"]
+	286 [label=" CONDITION3"]
 	286 -> 287
-	166 [label="; divider"]
-	166 -> 287
-	288 [label="X as ANY_NUMBER"]
-	170 [label="x ID v=x"]
-	170 -> 288
-	289 [label="X as EXPRESSION3"]
-	288 [label=" ANY_NUMBER v=10 t=int"]
+	288 [label="X as CONDITION"]
+	287 [label=" CONDITION2"]
+	287 -> 288
+	289 [label="X as COMMAND"]
+	132 [label="i ID v=i"]
+	132 -> 289
+	133 [label="= assign"]
+	133 -> 289
+	288 [label=" CONDITION"]
 	288 -> 289
-	290 [label="X as EXPRESSION2"]
-	289 [label=" EXPRESSION3 v=10 t=int"]
+	135 [label="; divider"]
+	135 -> 289
+	290 [label="X as LIST_OF_COMMANDS"]
+	289 [label=" COMMAND"]
 	289 -> 290
-	291 [label="X as EXPRESSION"]
-	290 [label=" EXPRESSION2 v=10 t=int"]
+	291 [label="X as LIST_OF_COMMANDS"]
+	284 [label=" COMMAND t= i=None"]
+	284 -> 291
+	290 [label=" LIST_OF_COMMANDS"]
 	290 -> 291
-	292 [label="X as ANY_NUMBER"]
-	172 [label="y ID v=y"]
-	172 -> 292
-	293 [label="X as EXPRESSION3"]
-	292 [label=" ANY_NUMBER v=12.5 t=float"]
-	292 -> 293
-	294 [label="X as EXPRESSION2"]
-	293 [label=" EXPRESSION3 v=12.5 t=float"]
-	293 -> 294
-	295 [label="X as EXPRESSION"]
-	291 [label=" EXPRESSION v=10 t=int"]
-	291 -> 295
-	171 [label="+ plus_symbol"]
-	171 -> 295
-	294 [label=" EXPRESSION2 v=12.5 t=float"]
-	294 -> 295
 	296 [label="X as COMMAND"]
-	168 [label="z ID v=z"]
-	168 -> 296
-	169 [label="= assign"]
-	169 -> 296
-	295 [label=" EXPRESSION v=22.5 t=float"]
-	295 -> 296
-	173 [label="; divider"]
-	173 -> 296
-	297 [label="X as ANY_NUMBER"]
-	179 [label="i ID v=i"]
-	179 -> 297
-	298 [label="X as EXPRESSION3"]
-	297 [label=" ANY_NUMBER v=7 t=int"]
+	142 [label="i ID v=i"]
+	142 -> 296
+	143 [label="= assign"]
+	143 -> 296
+	144 [label="7 int"]
+	144 -> 296
+	145 [label="; divider"]
+	145 -> 296
+	297 [label="X as LIST_OF_COMMANDS"]
+	296 [label=" COMMAND t= i=7"]
+	296 -> 297
+	298 [label="X as COMMAND"]
+	119 [label="if condition_start v=if"]
+	119 -> 298
+	120 [label="( ("]
+	120 -> 298
+	283 [label=" CONDITION"]
+	283 -> 298
+	124 [label=") )"]
+	124 -> 298
+	125 [label="{ {"]
+	125 -> 298
+	291 [label=" LIST_OF_COMMANDS"]
+	291 -> 298
+	137 [label="} }"]
+	137 -> 298
+	139 [label="else condition_else v=else"]
+	139 -> 298
+	140 [label="{ {"]
+	140 -> 298
+	297 [label=" LIST_OF_COMMANDS"]
 	297 -> 298
-	299 [label="X as EXPRESSION3"]
-	178 [label="- minus_symbol"]
-	178 -> 299
-	298 [label=" EXPRESSION3 v=7 t=int"]
-	298 -> 299
-	300 [label="X as EXPRESSION2"]
-	299 [label=" EXPRESSION3 v=-7 t=int"]
-	299 -> 300
-	301 [label="X as EXPRESSION"]
-	300 [label=" EXPRESSION2 v=-7 t=int"]
-	300 -> 301
-	302 [label="X as ANY_NUMBER"]
-	181 [label="1 int v=1 t=int"]
-	181 -> 302
-	303 [label="X as EXPRESSION3"]
-	302 [label=" ANY_NUMBER v=1 t=int"]
-	302 -> 303
-	304 [label="X as EXPRESSION2"]
-	303 [label=" EXPRESSION3 v=1 t=int"]
-	303 -> 304
-	305 [label="X as EXPRESSION"]
-	301 [label=" EXPRESSION v=-7 t=int"]
-	301 -> 305
-	180 [label="+ plus_symbol"]
-	180 -> 305
-	304 [label=" EXPRESSION2 v=1 t=int"]
-	304 -> 305
-	306 [label="X as COMMAND"]
-	176 [label="i ID v=i"]
-	176 -> 306
-	177 [label="= assign"]
-	177 -> 306
-	305 [label=" EXPRESSION v=-6 t=int"]
+	147 [label="} }"]
+	147 -> 298
+	299 [label="X as ANY_NUMBER"]
+	152 [label="i ID v=i"]
+	152 -> 299
+	301 [label="X as CONDITION3"]
+	299 [label=" ANY_NUMBER v=7 t=int"]
+	299 -> 301
+	153 [label="< binary_compare"]
+	153 -> 301
+	154 [label="10 int"]
+	154 -> 301
+	302 [label="X as CONDITION2"]
+	301 [label=" CONDITION3"]
+	301 -> 302
+	303 [label="X as ANY_NUMBER"]
+	157 [label="i ID v=i"]
+	157 -> 303
+	305 [label="X as CONDITION3"]
+	303 [label=" ANY_NUMBER v=7 t=int"]
+	303 -> 305
+	158 [label="< binary_compare"]
+	158 -> 305
+	159 [label="2 int"]
+	159 -> 305
+	306 [label="X as CONDITION2"]
+	305 [label=" CONDITION3"]
 	305 -> 306
-	182 [label="; divider"]
-	182 -> 306
-	307 [label="X as ANY_NUMBER"]
-	186 [label="25 int v=25 t=int"]
-	186 -> 307
-	308 [label="X as EXPRESSION3"]
-	307 [label=" ANY_NUMBER v=25 t=int"]
-	307 -> 308
-	309 [label="X as EXPRESSION2"]
-	308 [label=" EXPRESSION3 v=25 t=int"]
-	308 -> 309
-	310 [label="X as EXPRESSION"]
-	309 [label=" EXPRESSION2 v=25 t=int"]
-	309 -> 310
-	311 [label="X as COMMAND"]
-	184 [label="i ID v=i"]
-	184 -> 311
-	185 [label="= assign"]
-	185 -> 311
-	310 [label=" EXPRESSION v=25 t=int"]
+	307 [label="X as CONDITION"]
+	306 [label=" CONDITION2"]
+	306 -> 307
+	308 [label="X as ANY_NUMBER"]
+	161 [label="i ID v=i"]
+	161 -> 308
+	310 [label="X as CONDITION3"]
+	308 [label=" ANY_NUMBER v=7 t=int"]
+	308 -> 310
+	162 [label="== binary_compare"]
+	162 -> 310
+	163 [label="1 int"]
+	163 -> 310
+	311 [label="X as CONDITION2"]
+	310 [label=" CONDITION3"]
 	310 -> 311
-	187 [label="; divider"]
-	187 -> 311
-	312 [label="X as LIST_OF_COMMANDS"]
-	311 [label=" COMMAND t= i=25"]
+	312 [label="X as CONDITION"]
+	307 [label=" CONDITION"]
+	307 -> 312
+	160 [label="|| binary_or"]
+	160 -> 312
+	311 [label=" CONDITION2"]
 	311 -> 312
-	313 [label="X as LIST_OF_COMMANDS"]
-	306 [label=" COMMAND t= i=-6"]
-	306 -> 313
-	312 [label=" LIST_OF_COMMANDS"]
+	313 [label="X as CONDITION3"]
+	156 [label="( ("]
+	156 -> 313
+	312 [label=" CONDITION"]
 	312 -> 313
-	314 [label="X as LIST_OF_COMMANDS"]
-	296 [label=" COMMAND t= z=22.5"]
-	296 -> 314
-	313 [label=" LIST_OF_COMMANDS"]
+	164 [label=") )"]
+	164 -> 313
+	314 [label="X as CONDITION2"]
+	302 [label=" CONDITION2"]
+	302 -> 314
+	155 [label="&& binary_and"]
+	155 -> 314
+	313 [label=" CONDITION3"]
 	313 -> 314
-	315 [label="X as LIST_OF_COMMANDS"]
-	287 [label=" COMMAND t= y=12.5"]
-	287 -> 315
-	314 [label=" LIST_OF_COMMANDS"]
+	315 [label="X as CONDITION"]
+	314 [label=" CONDITION2"]
 	314 -> 315
-	316 [label="X as LIST_OF_COMMANDS"]
-	282 [label=" COMMAND t= x=10"]
-	282 -> 316
-	315 [label=" LIST_OF_COMMANDS"]
-	315 -> 316
-	317 [label="X as LIST_OF_COMMANDS"]
-	277 [label=" COMMAND t= z=None"]
-	277 -> 317
-	316 [label=" LIST_OF_COMMANDS"]
-	316 -> 317
-	318 [label="X as LIST_OF_COMMANDS"]
-	276 [label=" COMMAND t= y=None"]
-	276 -> 318
-	317 [label=" LIST_OF_COMMANDS"]
-	317 -> 318
-	319 [label="X as LIST_OF_COMMANDS"]
-	275 [label=" COMMAND t= x=None"]
-	275 -> 319
-	318 [label=" LIST_OF_COMMANDS"]
-	318 -> 319
-	320 [label="X as COMMAND"]
-	127 [label="while cycle v=while"]
-	127 -> 320
-	128 [label="( ("]
-	128 -> 320
-	274 [label=" CONDITION"]
-	274 -> 320
-	142 [label=") )"]
-	142 -> 320
-	143 [label="{ {"]
-	143 -> 320
-	319 [label=" LIST_OF_COMMANDS"]
-	319 -> 320
-	189 [label="} }"]
-	189 -> 320
-	321 [label="X as LIST_OF_COMMANDS"]
-	320 [label=" COMMAND"]
-	320 -> 321
-	322 [label="X as LIST_OF_COMMANDS"]
-	257 [label=" COMMAND"]
-	257 -> 322
-	321 [label=" LIST_OF_COMMANDS"]
-	321 -> 322
-	323 [label="X as LIST_OF_COMMANDS"]
-	237 [label=" COMMAND"]
-	237 -> 323
-	322 [label=" LIST_OF_COMMANDS"]
-	322 -> 323
-	324 [label="X as LIST_OF_COMMANDS"]
-	227 [label=" COMMAND t= f=0.5"]
-	227 -> 324
-	323 [label=" LIST_OF_COMMANDS"]
-	323 -> 324
-	325 [label="X as LIST_OF_COMMANDS"]
-	222 [label=" COMMAND t= i=6"]
-	222 -> 325
-	324 [label=" LIST_OF_COMMANDS"]
-	324 -> 325
-	326 [label="X as LIST_OF_COMMANDS"]
-	217 [label=" COMMAND t= i=1"]
-	217 -> 326
-	325 [label=" LIST_OF_COMMANDS"]
-	325 -> 326
-	327 [label="X as LIST_OF_COMMANDS"]
-	212 [label=" COMMAND t= i=7"]
-	212 -> 327
-	326 [label=" LIST_OF_COMMANDS"]
-	326 -> 327
-	328 [label="X as LIST_OF_COMMANDS"]
-	207 [label=" COMMAND t= i=6"]
-	207 -> 328
-	327 [label=" LIST_OF_COMMANDS"]
-	327 -> 328
-	329 [label="X as LIST_OF_COMMANDS"]
-	202 [label=" COMMAND"]
-	202 -> 329
-	328 [label=" LIST_OF_COMMANDS"]
-	328 -> 329
-	330 [label="X as LIST_OF_COMMANDS"]
-	201 [label=" COMMAND"]
-	201 -> 330
-	329 [label=" LIST_OF_COMMANDS"]
-	329 -> 330
-	331 [label="X as LIST_OF_COMMANDS"]
-	200 [label=" COMMAND t= fix=None"]
-	200 -> 331
-	330 [label=" LIST_OF_COMMANDS"]
-	330 -> 331
-	332 [label="X as LIST_OF_COMMANDS"]
-	199 [label=" COMMAND t= bit=None"]
-	199 -> 332
-	331 [label=" LIST_OF_COMMANDS"]
-	331 -> 332
-	333 [label="X as LIST_OF_COMMANDS"]
-	198 [label=" COMMAND t= o=None"]
-	198 -> 333
-	332 [label=" LIST_OF_COMMANDS"]
-	332 -> 333
-	334 [label="X as LIST_OF_COMMANDS"]
-	197 [label=" COMMAND t= h=None"]
-	197 -> 334
-	333 [label=" LIST_OF_COMMANDS"]
-	333 -> 334
-	335 [label="X as LIST_OF_COMMANDS"]
-	196 [label=" COMMAND t= b=None"]
-	196 -> 335
-	334 [label=" LIST_OF_COMMANDS"]
-	334 -> 335
-	336 [label="X as LIST_OF_COMMANDS"]
-	195 [label=" COMMAND t= s=None"]
-	195 -> 336
-	335 [label=" LIST_OF_COMMANDS"]
-	335 -> 336
-	337 [label="X as LIST_OF_COMMANDS"]
-	194 [label=" COMMAND t= f=None"]
-	194 -> 337
-	336 [label=" LIST_OF_COMMANDS"]
+	316 [label="X as COMMAND"]
+	169 [label="int type v=int"]
+	169 -> 316
+	170 [label="x ID v=x"]
+	170 -> 316
+	171 [label="; divider"]
+	171 -> 316
+	317 [label="X as COMMAND"]
+	173 [label="float type v=float"]
+	173 -> 317
+	174 [label="y ID v=y"]
+	174 -> 317
+	175 [label="; divider"]
+	175 -> 317
+	318 [label="X as COMMAND"]
+	177 [label="float type v=float"]
+	177 -> 318
+	178 [label="z ID v=z"]
+	178 -> 318
+	179 [label="; divider"]
+	179 -> 318
+	323 [label="X as COMMAND"]
+	181 [label="x ID v=x"]
+	181 -> 323
+	182 [label="= assign"]
+	182 -> 323
+	183 [label="10 int"]
+	183 -> 323
+	184 [label="; divider"]
+	184 -> 323
+	328 [label="X as COMMAND"]
+	186 [label="y ID v=y"]
+	186 -> 328
+	187 [label="= assign"]
+	187 -> 328
+	188 [label="12.5 float"]
+	188 -> 328
+	189 [label="; divider"]
+	189 -> 328
+	329 [label="X as ANY_NUMBER"]
+	193 [label="x ID v=x"]
+	193 -> 329
+	333 [label="X as ANY_NUMBER"]
+	195 [label="y ID v=y"]
+	195 -> 333
+	336 [label="X as EXPRESSION"]
+	329 [label="10 int"]
+	329 -> 336
+	194 [label="+ plus_symbol"]
+	194 -> 336
+	333 [label="12.5 float"]
+	333 -> 336
+	337 [label="X as COMMAND"]
+	191 [label="z ID v=z"]
+	191 -> 337
+	192 [label="= assign"]
+	192 -> 337
+	336 [label=" EXPRESSION v=22.5 t=float"]
 	336 -> 337
-	338 [label="X as LIST_OF_COMMANDS"]
-	193 [label=" COMMAND t= i=None"]
-	193 -> 338
-	337 [label=" LIST_OF_COMMANDS"]
-	337 -> 338
-	339 [label="X as PROGRAM"]
+	196 [label="; divider"]
+	196 -> 337
+	338 [label="X as ANY_NUMBER"]
+	202 [label="i ID v=i"]
+	202 -> 338
+	340 [label="X as EXPRESSION3"]
+	201 [label="- minus_symbol"]
+	201 -> 340
+	338 [label="7 int"]
+	338 -> 340
+	346 [label="X as EXPRESSION"]
+	340 [label="-7 int"]
+	340 -> 346
+	203 [label="+ plus_symbol"]
+	203 -> 346
+	204 [label="1 int"]
+	204 -> 346
+	347 [label="X as COMMAND"]
+	199 [label="i ID v=i"]
+	199 -> 347
+	200 [label="= assign"]
+	200 -> 347
+	346 [label=" EXPRESSION v=-6 t=int"]
+	346 -> 347
+	205 [label="; divider"]
+	205 -> 347
+	352 [label="X as COMMAND"]
+	207 [label="i ID v=i"]
+	207 -> 352
+	208 [label="= assign"]
+	208 -> 352
+	209 [label="25 int"]
+	209 -> 352
+	210 [label="; divider"]
+	210 -> 352
+	353 [label="X as LIST_OF_COMMANDS"]
+	352 [label=" COMMAND t= i=25"]
+	352 -> 353
+	354 [label="X as LIST_OF_COMMANDS"]
+	347 [label=" COMMAND t= i=-6"]
+	347 -> 354
+	353 [label=" LIST_OF_COMMANDS"]
+	353 -> 354
+	355 [label="X as LIST_OF_COMMANDS"]
+	337 [label=" COMMAND t= z=22.5"]
+	337 -> 355
+	354 [label=" LIST_OF_COMMANDS"]
+	354 -> 355
+	356 [label="X as LIST_OF_COMMANDS"]
+	328 [label=" COMMAND t= y=12.5"]
+	328 -> 356
+	355 [label=" LIST_OF_COMMANDS"]
+	355 -> 356
+	357 [label="X as LIST_OF_COMMANDS"]
+	323 [label=" COMMAND t= x=10"]
+	323 -> 357
+	356 [label=" LIST_OF_COMMANDS"]
+	356 -> 357
+	358 [label="X as LIST_OF_COMMANDS"]
+	318 [label=" COMMAND t= z=None"]
+	318 -> 358
+	357 [label=" LIST_OF_COMMANDS"]
+	357 -> 358
+	359 [label="X as LIST_OF_COMMANDS"]
+	317 [label=" COMMAND t= y=None"]
+	317 -> 359
+	358 [label=" LIST_OF_COMMANDS"]
+	358 -> 359
+	360 [label="X as LIST_OF_COMMANDS"]
+	316 [label=" COMMAND t= x=None"]
+	316 -> 360
+	359 [label=" LIST_OF_COMMANDS"]
+	359 -> 360
+	361 [label="X as COMMAND"]
+	150 [label="while cycle v=while"]
+	150 -> 361
+	151 [label="( ("]
+	151 -> 361
+	315 [label=" CONDITION"]
+	315 -> 361
+	165 [label=") )"]
+	165 -> 361
+	166 [label="{ {"]
+	166 -> 361
+	360 [label=" LIST_OF_COMMANDS"]
+	360 -> 361
+	212 [label="} }"]
+	212 -> 361
+	362 [label="X as LIST_OF_COMMANDS"]
+	361 [label=" COMMAND"]
+	361 -> 362
+	363 [label="X as LIST_OF_COMMANDS"]
+	298 [label=" COMMAND"]
+	298 -> 363
+	362 [label=" LIST_OF_COMMANDS"]
+	362 -> 363
+	364 [label="X as LIST_OF_COMMANDS"]
+	278 [label=" COMMAND"]
+	278 -> 364
+	363 [label=" LIST_OF_COMMANDS"]
+	363 -> 364
+	365 [label="X as LIST_OF_COMMANDS"]
+	265 [label=" COMMAND t= o=2"]
+	265 -> 365
+	364 [label=" LIST_OF_COMMANDS"]
+	364 -> 365
+	366 [label="X as LIST_OF_COMMANDS"]
+	260 [label=" COMMAND"]
+	260 -> 366
+	365 [label=" LIST_OF_COMMANDS"]
+	365 -> 366
+	367 [label="X as LIST_OF_COMMANDS"]
+	250 [label=" COMMAND t= f=0.5"]
+	250 -> 367
+	366 [label=" LIST_OF_COMMANDS"]
+	366 -> 367
+	368 [label="X as LIST_OF_COMMANDS"]
+	245 [label=" COMMAND t= i=6"]
+	245 -> 368
+	367 [label=" LIST_OF_COMMANDS"]
+	367 -> 368
+	369 [label="X as LIST_OF_COMMANDS"]
+	240 [label=" COMMAND t= i=1"]
+	240 -> 369
+	368 [label=" LIST_OF_COMMANDS"]
+	368 -> 369
+	370 [label="X as LIST_OF_COMMANDS"]
+	235 [label=" COMMAND t= i=7"]
+	235 -> 370
+	369 [label=" LIST_OF_COMMANDS"]
+	369 -> 370
+	371 [label="X as LIST_OF_COMMANDS"]
+	230 [label=" COMMAND t= i=6"]
+	230 -> 371
+	370 [label=" LIST_OF_COMMANDS"]
+	370 -> 371
+	372 [label="X as LIST_OF_COMMANDS"]
+	225 [label=" COMMAND"]
+	225 -> 372
+	371 [label=" LIST_OF_COMMANDS"]
+	371 -> 372
+	373 [label="X as LIST_OF_COMMANDS"]
+	224 [label=" COMMAND"]
+	224 -> 373
+	372 [label=" LIST_OF_COMMANDS"]
+	372 -> 373
+	374 [label="X as LIST_OF_COMMANDS"]
+	223 [label=" COMMAND t= fix=None"]
+	223 -> 374
+	373 [label=" LIST_OF_COMMANDS"]
+	373 -> 374
+	375 [label="X as LIST_OF_COMMANDS"]
+	222 [label=" COMMAND t= bit=None"]
+	222 -> 375
+	374 [label=" LIST_OF_COMMANDS"]
+	374 -> 375
+	376 [label="X as LIST_OF_COMMANDS"]
+	221 [label=" COMMAND t= o=None"]
+	221 -> 376
+	375 [label=" LIST_OF_COMMANDS"]
+	375 -> 376
+	377 [label="X as LIST_OF_COMMANDS"]
+	220 [label=" COMMAND t= h=None"]
+	220 -> 377
+	376 [label=" LIST_OF_COMMANDS"]
+	376 -> 377
+	378 [label="X as LIST_OF_COMMANDS"]
+	219 [label=" COMMAND t= b=None"]
+	219 -> 378
+	377 [label=" LIST_OF_COMMANDS"]
+	377 -> 378
+	379 [label="X as LIST_OF_COMMANDS"]
+	218 [label=" COMMAND t= s=None"]
+	218 -> 379
+	378 [label=" LIST_OF_COMMANDS"]
+	378 -> 379
+	380 [label="X as LIST_OF_COMMANDS"]
+	217 [label=" COMMAND t= f=None"]
+	217 -> 380
+	379 [label=" LIST_OF_COMMANDS"]
+	379 -> 380
+	381 [label="X as LIST_OF_COMMANDS"]
+	216 [label=" COMMAND t= i=None"]
+	216 -> 381
+	380 [label=" LIST_OF_COMMANDS"]
+	380 -> 381
+	382 [label="X as PROGRAM"]
 	1 [label="void function_type v=void"]
-	1 -> 339
+	1 -> 382
 	2 [label="main entry_point v=main"]
-	2 -> 339
+	2 -> 382
 	3 [label="( ("]
-	3 -> 339
+	3 -> 382
 	4 [label=") )"]
-	4 -> 339
+	4 -> 382
 	5 [label="{ {"]
-	5 -> 339
-	338 [label=" LIST_OF_COMMANDS"]
-	338 -> 339
-	191 [label="} }"]
-	191 -> 339
+	5 -> 382
+	381 [label=" LIST_OF_COMMANDS"]
+	381 -> 382
+	214 [label="} }"]
+	214 -> 382
 }

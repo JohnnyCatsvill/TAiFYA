@@ -19,7 +19,7 @@ RULES = [
      [[], [], [], [], ["block"], [], ["end_block"], [], ["block"], [], ["end_block"]]],
     ["COMMAND", ["cycle ( CONDITION ) { LIST_OF_COMMANDS }"], [],
      [[], [], [], [], ["block"], [], ["end_block"]]],
-    ["COMMAND", ["{ LIST_OF_COMMANDS }"], [["block"], [], ["end_block"]]],
+    ["COMMAND", ["{ LIST_OF_COMMANDS }"], [], [["block"], [], ["end_block"]]],
 
     ["ANY_NUMBER", [OCT_NAME], [["pass"]]],
     ["ANY_NUMBER", [HEX_NAME], [["pass"]]],
