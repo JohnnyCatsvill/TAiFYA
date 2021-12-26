@@ -35,30 +35,30 @@ RULES = [
     ["LIST_OF_ELEMENTS2", ["ANY_NUMBER"], [["init_list"]]],
 
 
-    ["BOOL_NUMBER", ["boolean_true"]],
-    ["BOOL_NUMBER", ["boolean_false"]],
+    ["BOOL_NUMBER", ["boolean_true"], [["pass"]]],
+    ["BOOL_NUMBER", ["boolean_false"], [["pass"]]],
 
     ["EXPRESSION", ["EXPRESSION plus_symbol EXPRESSION2"], [["add"], [], ["add"]]],
     ["EXPRESSION", ["EXPRESSION minus_symbol EXPRESSION2"], [["sub"], [], ["sub"]]],
     ["EXPRESSION", ["EXPRESSION2"], [["pass"]] ],
 
-    ["EXPRESSION2", ["EXPRESSION2 multiply_symbol EXPRESSION3"]],
-    ["EXPRESSION2", ["EXPRESSION2 divide_symbol EXPRESSION3"]],
+    ["EXPRESSION2", ["EXPRESSION2 multiply_symbol EXPRESSION3"], [["mult"], [], ["mult"]]],
+    ["EXPRESSION2", ["EXPRESSION2 divide_symbol EXPRESSION3"], [["div"], [], ["div"]]],
     ["EXPRESSION2", ["EXPRESSION3"], [["pass"]] ],
 
-    ["EXPRESSION3", ["( EXPRESSION )"], [[], ["pass2"]]],
+    ["EXPRESSION3", ["( EXPRESSION )"], [[], ["pass_but_show"]]],
     ["EXPRESSION3", ["minus_symbol EXPRESSION3"], [[], ["negate"]]],
     ["EXPRESSION3", ["ANY_NUMBER"], [["pass"]] ],
 
-    ["CONDITION", ["CONDITION binary_or CONDITION2"]],
-    ["CONDITION", ["CONDITION2"]],
+    ["CONDITION", ["CONDITION binary_or CONDITION2"], [["or"], [], ["or"]]],
+    ["CONDITION", ["CONDITION2"], [["pass"]]],
 
-    ["CONDITION2", ["CONDITION2 binary_and CONDITION3"]],
-    ["CONDITION2", ["CONDITION3"]],
+    ["CONDITION2", ["CONDITION2 binary_and CONDITION3"], [["and"], [], ["and"]]],
+    ["CONDITION2", ["CONDITION3"], [["pass"]]],
 
-    ["CONDITION3", ["( CONDITION )"]],
-    ["CONDITION3", ["unary_not CONDITION3"]],
-    ["CONDITION3", ["BOOL_NUMBER"]],
+    ["CONDITION3", ["( CONDITION )"], [[], ["pass_but_show"]]],
+    ["CONDITION3", ["unary_not CONDITION3"], [[], ["not"]]],
+    ["CONDITION3", ["BOOL_NUMBER"], [["pass"]]],
     # ["CONDITION3", ["ANY_NUMBER"]],
-    ["CONDITION3", ["ANY_NUMBER binary_compare ANY_NUMBER"]],
+    ["CONDITION3", ["ANY_NUMBER binary_compare ANY_NUMBER"], [["compare"], ["compare"], ["compare"]]],
 ]

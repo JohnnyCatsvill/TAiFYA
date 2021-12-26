@@ -82,6 +82,7 @@ BIN_NAME = "bin"
 DEC_NAME = "int"
 FLOAT_NAME = "float"
 STRING_NAME = "string"
+BOOL_NAME = "bool"
 
 MAX_LENGTH_OF_TYPES = {
     DEC_NAME: 11,

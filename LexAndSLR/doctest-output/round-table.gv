@@ -1,127 +1,127 @@
 // The Round Table
 digraph {
 	219 [label="X as COMMAND"]
-	7 [label="int type v=int7None"]
+	7 [label="int type v=int"]
 	7 -> 219
-	8 [label="i ID v=i8None"]
+	8 [label="i ID v=i"]
 	8 -> 219
-	9 [label="; divider9None"]
+	9 [label="; divider"]
 	9 -> 219
 	220 [label="X as COMMAND"]
-	12 [label="float type v=float12None"]
+	12 [label="float type v=float"]
 	12 -> 220
-	13 [label="f ID v=f13None"]
+	13 [label="f ID v=f"]
 	13 -> 220
-	14 [label="; divider14None"]
+	14 [label="; divider"]
 	14 -> 220
 	221 [label="X as COMMAND"]
-	16 [label="string type v=string16None"]
+	16 [label="string type v=string"]
 	16 -> 221
-	17 [label="s ID v=s17None"]
+	17 [label="s ID v=s"]
 	17 -> 221
-	18 [label="; divider18None"]
+	18 [label="; divider"]
 	18 -> 221
 	222 [label="X as COMMAND"]
-	20 [label="bool type v=bool20None"]
+	20 [label="bool type v=bool"]
 	20 -> 222
-	21 [label="b ID v=b21None"]
+	21 [label="b ID v=b"]
 	21 -> 222
-	22 [label="; divider22None"]
+	22 [label="; divider"]
 	22 -> 222
 	223 [label="X as COMMAND"]
-	25 [label="hex type v=hex25None"]
+	25 [label="hex type v=hex"]
 	25 -> 223
-	26 [label="h ID v=h26None"]
+	26 [label="h ID v=h"]
 	26 -> 223
-	27 [label="; divider27None"]
+	27 [label="; divider"]
 	27 -> 223
 	224 [label="X as COMMAND"]
-	29 [label="int type v=int29None"]
+	29 [label="int type v=int"]
 	29 -> 224
-	30 [label="o ID v=o30None"]
+	30 [label="o ID v=o"]
 	30 -> 224
-	31 [label="; divider31None"]
+	31 [label="; divider"]
 	31 -> 224
 	225 [label="X as COMMAND"]
-	33 [label="bin type v=bin33None"]
+	33 [label="bin type v=bin"]
 	33 -> 225
-	34 [label="bit ID v=bit34None"]
+	34 [label="bit ID v=bit"]
 	34 -> 225
-	35 [label="; divider35None"]
+	35 [label="; divider"]
 	35 -> 225
 	226 [label="X as COMMAND"]
-	37 [label="fixed type v=fixed37None"]
+	37 [label="fixed type v=fixed"]
 	37 -> 226
-	38 [label="fix ID v=fix38None"]
+	38 [label="fix ID v=fix"]
 	38 -> 226
-	39 [label="; divider39None"]
+	39 [label="; divider"]
 	39 -> 226
 	227 [label="X as COMMAND"]
-	42 [label="read reader v=read42None"]
+	42 [label="read reader v=read"]
 	42 -> 227
-	43 [label="( (43None"]
+	43 [label="( ("]
 	43 -> 227
-	44 [label="s ID v=s44None"]
+	44 [label="s ID v=s"]
 	44 -> 227
-	45 [label=") )45None"]
+	45 [label=") )"]
 	45 -> 227
-	46 [label="; divider46None"]
+	46 [label="; divider"]
 	46 -> 227
 	228 [label="X as COMMAND"]
-	49 [label="print printer v=print49None"]
+	49 [label="print printer v=print"]
 	49 -> 228
-	50 [label="( (50None"]
+	50 [label="( ("]
 	50 -> 228
-	51 [label="s ID v=s51None"]
+	51 [label="s ID v=s"]
 	51 -> 228
-	52 [label=") )52None"]
+	52 [label=") )"]
 	52 -> 228
-	53 [label="; divider53None"]
+	53 [label="; divider"]
 	53 -> 228
 	233 [label="X as COMMAND"]
-	58 [label="i ID v=i58None"]
+	58 [label="i ID v=i"]
 	58 -> 233
-	59 [label="= assign59None"]
+	59 [label="= assign"]
 	59 -> 233
 	60 [label="6 oct"]
 	60 -> 233
-	61 [label="; divider61None"]
+	61 [label="; divider"]
 	61 -> 233
 	238 [label="X as COMMAND"]
-	64 [label="i ID v=i64None"]
+	64 [label="i ID v=i"]
 	64 -> 238
-	65 [label="= assign65None"]
+	65 [label="= assign"]
 	65 -> 238
 	66 [label="7 hex"]
 	66 -> 238
-	67 [label="; divider67None"]
+	67 [label="; divider"]
 	67 -> 238
 	243 [label="X as COMMAND"]
-	69 [label="i ID v=i69None"]
+	69 [label="i ID v=i"]
 	69 -> 243
-	70 [label="= assign70None"]
+	70 [label="= assign"]
 	70 -> 243
 	71 [label="1 bin"]
 	71 -> 243
-	72 [label="; divider72None"]
+	72 [label="; divider"]
 	72 -> 243
 	248 [label="X as COMMAND"]
-	74 [label="i ID v=i74None"]
+	74 [label="i ID v=i"]
 	74 -> 248
-	75 [label="= assign75None"]
+	75 [label="= assign"]
 	75 -> 248
 	76 [label="6 int"]
 	76 -> 248
-	77 [label="; divider77None"]
+	77 [label="; divider"]
 	77 -> 248
 	253 [label="X as COMMAND"]
-	79 [label="f ID v=f79None"]
+	79 [label="f ID v=f"]
 	79 -> 253
-	80 [label="= assign80None"]
+	80 [label="= assign"]
 	80 -> 253
 	81 [label="0.5 float"]
 	81 -> 253
-	82 [label="; divider82None"]
+	82 [label="; divider"]
 	82 -> 253
 	258 [label="X as LIST_OF_ELEMENTS2"]
 	93 [label="0.5 float"]
@@ -129,506 +129,473 @@ digraph {
 	259 [label="X as LIST_OF_ELEMENTS2"]
 	91 [label="5 int"]
 	91 -> 259
-	92 [label=", comma92None"]
+	92 [label=", comma"]
 	92 -> 259
-	258 [label=" LIST_OF_ELEMENTS2 v=[0.5] t=float258None"]
+	258 [label=" LIST_OF_ELEMENTS2 v=[0.5] t=float"]
 	258 -> 259
 	260 [label="X as LIST_OF_ELEMENTS2"]
 	89 [label="3 int"]
 	89 -> 260
-	90 [label=", comma90None"]
+	90 [label=", comma"]
 	90 -> 260
-	259 [label=" LIST_OF_ELEMENTS2 v=[5, 0.5] t=float259None"]
+	259 [label=" LIST_OF_ELEMENTS2 v=[5, 0.5] t=float"]
 	259 -> 260
 	261 [label="X as LIST_OF_ELEMENTS2"]
 	87 [label="1 int"]
 	87 -> 261
-	88 [label=", comma88None"]
+	88 [label=", comma"]
 	88 -> 261
-	260 [label=" LIST_OF_ELEMENTS2 v=[3, 5, 0.5] t=float260None"]
+	260 [label=" LIST_OF_ELEMENTS2 v=[3, 5, 0.5] t=float"]
 	260 -> 261
 	263 [label="X as COMMAND"]
-	84 [label="f ID v=f84None"]
+	84 [label="f ID v=f"]
 	84 -> 263
-	85 [label="= assign85None"]
+	85 [label="= assign"]
 	85 -> 263
 	261 [label="[1, 3, 5, 0.5] float"]
 	261 -> 263
-	95 [label="; divider95None"]
+	95 [label="; divider"]
 	95 -> 263
 	268 [label="X as COMMAND"]
-	97 [label="o ID v=o97None"]
+	97 [label="o ID v=o"]
 	97 -> 268
-	98 [label="= assign98None"]
+	98 [label="= assign"]
 	98 -> 268
 	99 [label="2 int"]
 	99 -> 268
-	100 [label="; divider100None"]
+	100 [label="; divider"]
 	100 -> 268
 	269 [label="X as COMMAND"]
-	105 [label="int type v=int105None"]
+	105 [label="int type v=int"]
 	105 -> 269
-	106 [label="i ID v=i106None"]
+	106 [label="i ID v=i"]
 	106 -> 269
-	107 [label="; divider107None"]
+	107 [label="; divider"]
 	107 -> 269
 	270 [label="X as ANY_NUMBER"]
-	111 [label="o ID v=o111None"]
+	111 [label="o ID v=o"]
 	111 -> 270
 	277 [label="X as EXPRESSION"]
 	270 [label="2 int"]
 	270 -> 277
-	112 [label="+ plus_symbol112None"]
+	112 [label="+ plus_symbol"]
 	112 -> 277
 	113 [label="2 int"]
 	113 -> 277
 	278 [label="X as COMMAND"]
-	109 [label="i ID v=i109None"]
+	109 [label="i ID v=i"]
 	109 -> 278
-	110 [label="= assign110None"]
+	110 [label="= assign"]
 	110 -> 278
-	277 [label=" EXPRESSION v=4 t=int277None"]
+	277 [label=" EXPRESSION v=4 t=int"]
 	277 -> 278
-	114 [label="; divider114None"]
+	114 [label="; divider"]
 	114 -> 278
 	279 [label="X as LIST_OF_COMMANDS"]
-	278 [label=" COMMAND t= i=4278None"]
+	278 [label=" COMMAND t= i=4"]
 	278 -> 279
 	280 [label="X as LIST_OF_COMMANDS"]
-	269 [label=" COMMAND t= i=None269None"]
+	269 [label=" COMMAND t= i=None"]
 	269 -> 280
-	279 [label=" LIST_OF_COMMANDS279None"]
+	279 [label=" LIST_OF_COMMANDS"]
 	279 -> 280
 	281 [label="X as COMMAND"]
-	103 [label="{ {103None"]
+	103 [label="{ {"]
 	103 -> 281
-	280 [label=" LIST_OF_COMMANDS280None"]
+	280 [label=" LIST_OF_COMMANDS"]
 	280 -> 281
-	116 [label="} }116None"]
+	116 [label="} }"]
 	116 -> 281
 	282 [label="X as ANY_NUMBER"]
-	121 [label="i ID v=i121None"]
+	121 [label="i ID v=i"]
 	121 -> 282
 	284 [label="X as CONDITION3"]
-	282 [label=" ANY_NUMBER v=6 t=int282None"]
+	282 [label=" ANY_NUMBER v=6 t=int"]
 	282 -> 284
-	122 [label="== binary_compare122None"]
+	122 [label="== binary_compare"]
 	122 -> 284
 	123 [label="6 int"]
 	123 -> 284
-	285 [label="X as CONDITION2"]
-	284 [label=" CONDITION3284None"]
-	284 -> 285
-	286 [label="X as CONDITION"]
-	285 [label=" CONDITION2285None"]
-	285 -> 286
 	287 [label="X as COMMAND"]
-	128 [label="bool type v=bool128None"]
+	128 [label="bool type v=bool"]
 	128 -> 287
-	129 [label="i ID v=i129None"]
+	129 [label="i ID v=i"]
 	129 -> 287
-	130 [label="; divider130None"]
+	130 [label="; divider"]
 	130 -> 287
-	288 [label="X as BOOL_NUMBER"]
-	134 [label="True boolean_true v=True134None"]
-	134 -> 288
-	289 [label="X as CONDITION3"]
-	288 [label=" BOOL_NUMBER288None"]
-	288 -> 289
-	290 [label="X as CONDITION2"]
-	289 [label=" CONDITION3289None"]
-	289 -> 290
-	291 [label="X as CONDITION"]
-	290 [label=" CONDITION2290None"]
-	290 -> 291
 	292 [label="X as COMMAND"]
-	132 [label="i ID v=i132None"]
+	132 [label="i ID v=i"]
 	132 -> 292
-	133 [label="= assign133None"]
+	133 [label="= assign"]
 	133 -> 292
-	291 [label=" CONDITION291None"]
-	291 -> 292
-	135 [label="; divider135None"]
+	134 [label="true bool"]
+	134 -> 292
+	135 [label="; divider"]
 	135 -> 292
 	293 [label="X as LIST_OF_COMMANDS"]
-	292 [label=" COMMAND292None"]
+	292 [label=" COMMAND"]
 	292 -> 293
 	294 [label="X as LIST_OF_COMMANDS"]
-	287 [label=" COMMAND t= i=None287None"]
+	287 [label=" COMMAND t= i=None"]
 	287 -> 294
-	293 [label=" LIST_OF_COMMANDS293None"]
+	293 [label=" LIST_OF_COMMANDS"]
 	293 -> 294
 	299 [label="X as COMMAND"]
-	142 [label="i ID v=i142None"]
+	142 [label="i ID v=i"]
 	142 -> 299
-	143 [label="= assign143None"]
+	143 [label="= assign"]
 	143 -> 299
 	144 [label="7 int"]
 	144 -> 299
-	145 [label="; divider145None"]
+	145 [label="; divider"]
 	145 -> 299
 	300 [label="X as LIST_OF_COMMANDS"]
-	299 [label=" COMMAND t= i=7299None"]
+	299 [label=" COMMAND t= i=7"]
 	299 -> 300
 	301 [label="X as COMMAND"]
-	119 [label="if condition_start v=if119None"]
+	119 [label="if condition_start v=if"]
 	119 -> 301
-	120 [label="( (120None"]
+	120 [label="( ("]
 	120 -> 301
-	286 [label=" CONDITION286None"]
-	286 -> 301
-	124 [label=") )124None"]
+	284 [label=" bool"]
+	284 -> 301
+	124 [label=") )"]
 	124 -> 301
-	125 [label="{ {125None"]
+	125 [label="{ {"]
 	125 -> 301
-	294 [label=" LIST_OF_COMMANDS294None"]
+	294 [label=" LIST_OF_COMMANDS"]
 	294 -> 301
-	137 [label="} }137None"]
+	137 [label="} }"]
 	137 -> 301
-	139 [label="else condition_else v=else139None"]
+	139 [label="else condition_else v=else"]
 	139 -> 301
-	140 [label="{ {140None"]
+	140 [label="{ {"]
 	140 -> 301
-	300 [label=" LIST_OF_COMMANDS300None"]
+	300 [label=" LIST_OF_COMMANDS"]
 	300 -> 301
-	147 [label="} }147None"]
+	147 [label="} }"]
 	147 -> 301
 	302 [label="X as ANY_NUMBER"]
-	152 [label="i ID v=i152None"]
+	152 [label="i ID v=i"]
 	152 -> 302
 	304 [label="X as CONDITION3"]
-	302 [label=" ANY_NUMBER v=7 t=int302None"]
+	302 [label=" ANY_NUMBER v=7 t=int"]
 	302 -> 304
-	153 [label="< binary_compare153None"]
+	153 [label="< binary_compare"]
 	153 -> 304
 	154 [label="10 int"]
 	154 -> 304
-	305 [label="X as CONDITION2"]
-	304 [label=" CONDITION3304None"]
-	304 -> 305
 	306 [label="X as ANY_NUMBER"]
-	157 [label="i ID v=i157None"]
+	157 [label="i ID v=i"]
 	157 -> 306
 	308 [label="X as CONDITION3"]
-	306 [label=" ANY_NUMBER v=7 t=int306None"]
+	306 [label=" ANY_NUMBER v=7 t=int"]
 	306 -> 308
-	158 [label="< binary_compare158None"]
+	158 [label="< binary_compare"]
 	158 -> 308
 	159 [label="2 int"]
 	159 -> 308
-	309 [label="X as CONDITION2"]
-	308 [label=" CONDITION3308None"]
-	308 -> 309
-	310 [label="X as CONDITION"]
-	309 [label=" CONDITION2309None"]
-	309 -> 310
 	311 [label="X as ANY_NUMBER"]
-	161 [label="i ID v=i161None"]
+	161 [label="i ID v=i"]
 	161 -> 311
 	313 [label="X as CONDITION3"]
-	311 [label=" ANY_NUMBER v=7 t=int311None"]
+	311 [label=" ANY_NUMBER v=7 t=int"]
 	311 -> 313
-	162 [label="== binary_compare162None"]
+	162 [label="== binary_compare"]
 	162 -> 313
 	163 [label="1 int"]
 	163 -> 313
-	314 [label="X as CONDITION2"]
-	313 [label=" CONDITION3313None"]
-	313 -> 314
 	315 [label="X as CONDITION"]
-	310 [label=" CONDITION310None"]
-	310 -> 315
-	160 [label="|| binary_or160None"]
+	308 [label=" bool"]
+	308 -> 315
+	160 [label="|| binary_or"]
 	160 -> 315
-	314 [label=" CONDITION2314None"]
-	314 -> 315
+	313 [label=" bool"]
+	313 -> 315
 	316 [label="X as CONDITION3"]
-	156 [label="( (156None"]
+	156 [label="( ("]
 	156 -> 316
-	315 [label=" CONDITION315None"]
+	315 [label=" CONDITION t=bool"]
 	315 -> 316
-	164 [label=") )164None"]
+	164 [label=") )"]
 	164 -> 316
 	317 [label="X as CONDITION2"]
-	305 [label=" CONDITION2305None"]
-	305 -> 317
-	155 [label="&& binary_and155None"]
+	304 [label=" bool"]
+	304 -> 317
+	155 [label="&& binary_and"]
 	155 -> 317
-	316 [label=" CONDITION3316None"]
+	316 [label=" CONDITION3 t=bool"]
 	316 -> 317
-	318 [label="X as CONDITION"]
-	317 [label=" CONDITION2317None"]
-	317 -> 318
 	319 [label="X as COMMAND"]
-	169 [label="int type v=int169None"]
+	169 [label="int type v=int"]
 	169 -> 319
-	170 [label="x ID v=x170None"]
+	170 [label="x ID v=x"]
 	170 -> 319
-	171 [label="; divider171None"]
+	171 [label="; divider"]
 	171 -> 319
 	320 [label="X as COMMAND"]
-	173 [label="float type v=float173None"]
+	173 [label="float type v=float"]
 	173 -> 320
-	174 [label="y ID v=y174None"]
+	174 [label="y ID v=y"]
 	174 -> 320
-	175 [label="; divider175None"]
+	175 [label="; divider"]
 	175 -> 320
 	321 [label="X as COMMAND"]
-	177 [label="float type v=float177None"]
+	177 [label="float type v=float"]
 	177 -> 321
-	178 [label="z ID v=z178None"]
+	178 [label="z ID v=z"]
 	178 -> 321
-	179 [label="; divider179None"]
+	179 [label="; divider"]
 	179 -> 321
 	326 [label="X as COMMAND"]
-	181 [label="x ID v=x181None"]
+	181 [label="x ID v=x"]
 	181 -> 326
-	182 [label="= assign182None"]
+	182 [label="= assign"]
 	182 -> 326
 	183 [label="10 int"]
 	183 -> 326
-	184 [label="; divider184None"]
+	184 [label="; divider"]
 	184 -> 326
 	331 [label="X as COMMAND"]
-	186 [label="y ID v=y186None"]
+	186 [label="y ID v=y"]
 	186 -> 331
-	187 [label="= assign187None"]
+	187 [label="= assign"]
 	187 -> 331
 	188 [label="12.5 float"]
 	188 -> 331
-	189 [label="; divider189None"]
+	189 [label="; divider"]
 	189 -> 331
 	332 [label="X as ANY_NUMBER"]
-	193 [label="x ID v=x193None"]
+	193 [label="x ID v=x"]
 	193 -> 332
 	336 [label="X as ANY_NUMBER"]
-	195 [label="y ID v=y195None"]
+	195 [label="y ID v=y"]
 	195 -> 336
 	339 [label="X as EXPRESSION"]
 	332 [label="10 int"]
 	332 -> 339
-	194 [label="+ plus_symbol194None"]
+	194 [label="+ plus_symbol"]
 	194 -> 339
 	336 [label="12.5 float"]
 	336 -> 339
 	340 [label="X as COMMAND"]
-	191 [label="z ID v=z191None"]
+	191 [label="z ID v=z"]
 	191 -> 340
-	192 [label="= assign192None"]
+	192 [label="= assign"]
 	192 -> 340
-	339 [label=" EXPRESSION v=22.5 t=float339None"]
+	339 [label=" EXPRESSION v=22.5 t=float"]
 	339 -> 340
-	196 [label="; divider196None"]
+	196 [label="; divider"]
 	196 -> 340
 	341 [label="X as ANY_NUMBER"]
-	202 [label="i ID v=i202None"]
+	202 [label="i ID v=i"]
 	202 -> 341
 	345 [label="X as ANY_NUMBER"]
-	204 [label="i ID v=i204None"]
+	204 [label="i ID v=i"]
 	204 -> 345
 	348 [label="X as EXPRESSION"]
 	341 [label="7 int"]
 	341 -> 348
-	203 [label="+ plus_symbol203None"]
+	203 [label="+ plus_symbol"]
 	203 -> 348
 	345 [label="7 int"]
 	345 -> 348
 	349 [label="X as EXPRESSION3"]
-	201 [label="( (201None"]
+	201 [label="( ("]
 	201 -> 349
-	348 [label=" EXPRESSION v=14 t=int348None"]
+	348 [label=" EXPRESSION v=14 t=int"]
 	348 -> 349
-	205 [label=") )205None"]
+	205 [label=") )"]
 	205 -> 349
 	355 [label="X as EXPRESSION"]
 	349 [label="14 int"]
 	349 -> 355
-	206 [label="- minus_symbol206None"]
+	206 [label="- minus_symbol"]
 	206 -> 355
 	207 [label="5 int"]
 	207 -> 355
 	356 [label="X as COMMAND"]
-	199 [label="i ID v=i199None"]
+	199 [label="i ID v=i"]
 	199 -> 356
-	200 [label="= assign200None"]
+	200 [label="= assign"]
 	200 -> 356
-	355 [label=" EXPRESSION v=9 t=int355None"]
+	355 [label=" EXPRESSION v=9 t=int"]
 	355 -> 356
-	208 [label="; divider208None"]
+	208 [label="; divider"]
 	208 -> 356
 	361 [label="X as COMMAND"]
-	210 [label="i ID v=i210None"]
+	210 [label="i ID v=i"]
 	210 -> 361
-	211 [label="= assign211None"]
+	211 [label="= assign"]
 	211 -> 361
 	212 [label="25 int"]
 	212 -> 361
-	213 [label="; divider213None"]
+	213 [label="; divider"]
 	213 -> 361
 	362 [label="X as LIST_OF_COMMANDS"]
-	361 [label=" COMMAND t= i=25361None"]
+	361 [label=" COMMAND t= i=25"]
 	361 -> 362
 	363 [label="X as LIST_OF_COMMANDS"]
-	356 [label=" COMMAND t= i=9356None"]
+	356 [label=" COMMAND t= i=9"]
 	356 -> 363
-	362 [label=" LIST_OF_COMMANDS362None"]
+	362 [label=" LIST_OF_COMMANDS"]
 	362 -> 363
 	364 [label="X as LIST_OF_COMMANDS"]
-	340 [label=" COMMAND t= z=22.5340None"]
+	340 [label=" COMMAND t= z=22.5"]
 	340 -> 364
-	363 [label=" LIST_OF_COMMANDS363None"]
+	363 [label=" LIST_OF_COMMANDS"]
 	363 -> 364
 	365 [label="X as LIST_OF_COMMANDS"]
-	331 [label=" COMMAND t= y=12.5331None"]
+	331 [label=" COMMAND t= y=12.5"]
 	331 -> 365
-	364 [label=" LIST_OF_COMMANDS364None"]
+	364 [label=" LIST_OF_COMMANDS"]
 	364 -> 365
 	366 [label="X as LIST_OF_COMMANDS"]
-	326 [label=" COMMAND t= x=10326None"]
+	326 [label=" COMMAND t= x=10"]
 	326 -> 366
-	365 [label=" LIST_OF_COMMANDS365None"]
+	365 [label=" LIST_OF_COMMANDS"]
 	365 -> 366
 	367 [label="X as LIST_OF_COMMANDS"]
-	321 [label=" COMMAND t= z=None321None"]
+	321 [label=" COMMAND t= z=None"]
 	321 -> 367
-	366 [label=" LIST_OF_COMMANDS366None"]
+	366 [label=" LIST_OF_COMMANDS"]
 	366 -> 367
 	368 [label="X as LIST_OF_COMMANDS"]
-	320 [label=" COMMAND t= y=None320None"]
+	320 [label=" COMMAND t= y=None"]
 	320 -> 368
-	367 [label=" LIST_OF_COMMANDS367None"]
+	367 [label=" LIST_OF_COMMANDS"]
 	367 -> 368
 	369 [label="X as LIST_OF_COMMANDS"]
-	319 [label=" COMMAND t= x=None319None"]
+	319 [label=" COMMAND t= x=None"]
 	319 -> 369
-	368 [label=" LIST_OF_COMMANDS368None"]
+	368 [label=" LIST_OF_COMMANDS"]
 	368 -> 369
 	370 [label="X as COMMAND"]
-	150 [label="while cycle v=while150None"]
+	150 [label="while cycle v=while"]
 	150 -> 370
-	151 [label="( (151None"]
+	151 [label="( ("]
 	151 -> 370
-	318 [label=" CONDITION318None"]
-	318 -> 370
-	165 [label=") )165None"]
+	317 [label=" bool"]
+	317 -> 370
+	165 [label=") )"]
 	165 -> 370
-	166 [label="{ {166None"]
+	166 [label="{ {"]
 	166 -> 370
-	369 [label=" LIST_OF_COMMANDS369None"]
+	369 [label=" LIST_OF_COMMANDS"]
 	369 -> 370
-	215 [label="} }215None"]
+	215 [label="} }"]
 	215 -> 370
 	371 [label="X as LIST_OF_COMMANDS"]
-	370 [label=" COMMAND370None"]
+	370 [label=" COMMAND"]
 	370 -> 371
 	372 [label="X as LIST_OF_COMMANDS"]
-	301 [label=" COMMAND301None"]
+	301 [label=" COMMAND"]
 	301 -> 372
-	371 [label=" LIST_OF_COMMANDS371None"]
+	371 [label=" LIST_OF_COMMANDS"]
 	371 -> 372
 	373 [label="X as LIST_OF_COMMANDS"]
-	281 [label=" COMMAND281None"]
+	281 [label=" COMMAND"]
 	281 -> 373
-	372 [label=" LIST_OF_COMMANDS372None"]
+	372 [label=" LIST_OF_COMMANDS"]
 	372 -> 373
 	374 [label="X as LIST_OF_COMMANDS"]
-	268 [label=" COMMAND t= o=2268None"]
+	268 [label=" COMMAND t= o=2"]
 	268 -> 374
-	373 [label=" LIST_OF_COMMANDS373None"]
+	373 [label=" LIST_OF_COMMANDS"]
 	373 -> 374
 	375 [label="X as LIST_OF_COMMANDS"]
-	263 [label=" COMMAND263None"]
+	263 [label=" COMMAND"]
 	263 -> 375
-	374 [label=" LIST_OF_COMMANDS374None"]
+	374 [label=" LIST_OF_COMMANDS"]
 	374 -> 375
 	376 [label="X as LIST_OF_COMMANDS"]
-	253 [label=" COMMAND t= f=0.5253None"]
+	253 [label=" COMMAND t= f=0.5"]
 	253 -> 376
-	375 [label=" LIST_OF_COMMANDS375None"]
+	375 [label=" LIST_OF_COMMANDS"]
 	375 -> 376
 	377 [label="X as LIST_OF_COMMANDS"]
-	248 [label=" COMMAND t= i=6248None"]
+	248 [label=" COMMAND t= i=6"]
 	248 -> 377
-	376 [label=" LIST_OF_COMMANDS376None"]
+	376 [label=" LIST_OF_COMMANDS"]
 	376 -> 377
 	378 [label="X as LIST_OF_COMMANDS"]
-	243 [label=" COMMAND t= i=1243None"]
+	243 [label=" COMMAND t= i=1"]
 	243 -> 378
-	377 [label=" LIST_OF_COMMANDS377None"]
+	377 [label=" LIST_OF_COMMANDS"]
 	377 -> 378
 	379 [label="X as LIST_OF_COMMANDS"]
-	238 [label=" COMMAND t= i=7238None"]
+	238 [label=" COMMAND t= i=7"]
 	238 -> 379
-	378 [label=" LIST_OF_COMMANDS378None"]
+	378 [label=" LIST_OF_COMMANDS"]
 	378 -> 379
 	380 [label="X as LIST_OF_COMMANDS"]
-	233 [label=" COMMAND t= i=6233None"]
+	233 [label=" COMMAND t= i=6"]
 	233 -> 380
-	379 [label=" LIST_OF_COMMANDS379None"]
+	379 [label=" LIST_OF_COMMANDS"]
 	379 -> 380
 	381 [label="X as LIST_OF_COMMANDS"]
-	228 [label=" COMMAND228None"]
+	228 [label=" COMMAND"]
 	228 -> 381
-	380 [label=" LIST_OF_COMMANDS380None"]
+	380 [label=" LIST_OF_COMMANDS"]
 	380 -> 381
 	382 [label="X as LIST_OF_COMMANDS"]
-	227 [label=" COMMAND227None"]
+	227 [label=" COMMAND"]
 	227 -> 382
-	381 [label=" LIST_OF_COMMANDS381None"]
+	381 [label=" LIST_OF_COMMANDS"]
 	381 -> 382
 	383 [label="X as LIST_OF_COMMANDS"]
-	226 [label=" COMMAND t= fix=None226None"]
+	226 [label=" COMMAND t= fix=None"]
 	226 -> 383
-	382 [label=" LIST_OF_COMMANDS382None"]
+	382 [label=" LIST_OF_COMMANDS"]
 	382 -> 383
 	384 [label="X as LIST_OF_COMMANDS"]
-	225 [label=" COMMAND t= bit=None225None"]
+	225 [label=" COMMAND t= bit=None"]
 	225 -> 384
-	383 [label=" LIST_OF_COMMANDS383None"]
+	383 [label=" LIST_OF_COMMANDS"]
 	383 -> 384
 	385 [label="X as LIST_OF_COMMANDS"]
-	224 [label=" COMMAND t= o=None224None"]
+	224 [label=" COMMAND t= o=None"]
 	224 -> 385
-	384 [label=" LIST_OF_COMMANDS384None"]
+	384 [label=" LIST_OF_COMMANDS"]
 	384 -> 385
 	386 [label="X as LIST_OF_COMMANDS"]
-	223 [label=" COMMAND t= h=None223None"]
+	223 [label=" COMMAND t= h=None"]
 	223 -> 386
-	385 [label=" LIST_OF_COMMANDS385None"]
+	385 [label=" LIST_OF_COMMANDS"]
 	385 -> 386
 	387 [label="X as LIST_OF_COMMANDS"]
-	222 [label=" COMMAND t= b=None222None"]
+	222 [label=" COMMAND t= b=None"]
 	222 -> 387
-	386 [label=" LIST_OF_COMMANDS386None"]
+	386 [label=" LIST_OF_COMMANDS"]
 	386 -> 387
 	388 [label="X as LIST_OF_COMMANDS"]
-	221 [label=" COMMAND t= s=None221None"]
+	221 [label=" COMMAND t= s=None"]
 	221 -> 388
-	387 [label=" LIST_OF_COMMANDS387None"]
+	387 [label=" LIST_OF_COMMANDS"]
 	387 -> 388
 	389 [label="X as LIST_OF_COMMANDS"]
-	220 [label=" COMMAND t= f=None220None"]
+	220 [label=" COMMAND t= f=None"]
 	220 -> 389
-	388 [label=" LIST_OF_COMMANDS388None"]
+	388 [label=" LIST_OF_COMMANDS"]
 	388 -> 389
 	390 [label="X as LIST_OF_COMMANDS"]
-	219 [label=" COMMAND t= i=None219None"]
+	219 [label=" COMMAND t= i=None"]
 	219 -> 390
-	389 [label=" LIST_OF_COMMANDS389None"]
+	389 [label=" LIST_OF_COMMANDS"]
 	389 -> 390
 	391 [label="X as PROGRAM"]
-	1 [label="void function_type v=void1None"]
+	1 [label="void function_type v=void"]
 	1 -> 391
-	2 [label="main entry_point v=main2None"]
+	2 [label="main entry_point v=main"]
 	2 -> 391
-	3 [label="( (3None"]
+	3 [label="( ("]
 	3 -> 391
-	4 [label=") )4None"]
+	4 [label=") )"]
 	4 -> 391
-	5 [label="{ {5None"]
+	5 [label="{ {"]
 	5 -> 391
-	390 [label=" LIST_OF_COMMANDS390None"]
+	390 [label=" LIST_OF_COMMANDS"]
 	390 -> 391
-	217 [label="} }217None"]
+	217 [label="} }"]
 	217 -> 391
 }

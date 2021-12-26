@@ -330,8 +330,18 @@ class Lexer:
                     # elem.token = ERROR_NAME  # not actually useful right now with exceptions
                     raise LexerException(LexerErrId.VALUE_IS_TOO_LARGE, elem.word, elem.row, elem.column)
 
+        def add_additional_data():
+            for elem in self.list:
+                if elem.token in ["boolean_true", "boolean_false"]:
+                    elem.values["type"] = BOOL_NAME
+                    elem.values["val"] = elem.word.lower()
+                # elif elem.token == "binary_compare": #питон сошел с ума, я пытался
+                #     elem.values["val"] = elem.word
+
+
         actual_run()
         check_for_type_length_limit()
+        add_additional_data()
 
     def show(self):
         for i in self.list:
