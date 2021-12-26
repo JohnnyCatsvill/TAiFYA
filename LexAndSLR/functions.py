@@ -1,7 +1,6 @@
 from VarsAndConst import VarsAndConst
 from constants.constants_lex import FLOAT_NAME, DEC_NAME, BIN_NAME, HEX_NAME, OCT_NAME
 
-
 class FuncPart:
     def __init__(self, function: callable, arg_length: int):
         self.f = function
@@ -93,8 +92,14 @@ def end_block(*args):
     var_list.remove_block()
 
 
+def passing(*args):
+    g: dict[str, any] = args[0][0].copy()
+    # g.pop("passing", False)
+    return g
+
+
 f = {
-    "pass": FuncPart(lambda arg: arg[0], 1),
+    "pass": FuncPart(passing, 1),
     "add": FuncPart(add, 2),
     "sub": FuncPart(sub, 2),
     "init": FuncPart(initiation, 2),
@@ -105,4 +110,7 @@ f = {
     "add_to_list": FuncPart(add_to_list, 2),
     "block": FuncPart(block, 1),
     "end_block": FuncPart(end_block, 1),
+    "pass2": FuncPart(passing, 1),
 }
+
+g = f.copy()

@@ -45,12 +45,9 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
         elif not (next_move := slr_table.get(right_stack[-1], input_stack[-1].token)):
             raise SLRRunnerException(SLRErrId.NOWHERE_TO_MOVE_NEXT, str(next_move), elemIndex, elemToken.token)
         else:
-            # if next_move[0].type == WordType.FOLD:
-            #     for i in range(rules_length[next_move[0].row]):  # pop x times
-            #         left_stack.pop()
-            #         right_stack.pop()
-            #     input_stack.append(indexes_to_words[next_move[0].row])
+
             if next_move[0].type == WordType.FOLD:
+                fold_into = rules[next_move[0].row - 1]
                 popped_left = []
                 popped_right = []
                 for i in range(rules_length[next_move[0].row]):  # pop x times
@@ -60,23 +57,27 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
                 popped_left = popped_left[::-1]
                 popped_right = popped_right[::-1]
                 result = dict()
-                for r, l in zip(popped_right, popped_left):
-                    for i in r:
-                        for a in i.action:
-                            function_args[a].append(l.values)
-                            if a == "pass":
-                                result.update({"last_node": l.values.get("last_node", l.graphviz_id)})
-                                result.update({"last_node_data": l.values.get("last_node_data", l.values)})
-                                result.update({"passing": True})
 
-                            if len(function_args[a]) >= f[a].arg_length:
-                                result.update(f[a].f(function_args[a]))
+                for zipped in zip(fold_into.right, popped_left):
+                    r, l = zipped
+                    for a in r.action:
 
-                if not result.get("passing"):
-                    result.update({"last_node": generator.current + 1})
-                    result.update({"last_node_data": result})
+                        function_args[a].append(l.values)
+                        if a == "pass":
+                            last_node = l.values.get("last_node", l.graphviz_id)
+                            last_node_values = l.values.get("last_node_data", l.values)
+                            if not result.get("last_node"):
+                                result.update({"last_node": []})
+                                result.update({"last_node_data": []})
+                            result["last_node"].append(last_node)
+                            result["last_node_data"].append(last_node_values)
+                            result.update({"passing": True})
 
-                new_token = Token("X", rules[next_move[0].row - 1].left, 0, 0, next(generator), result)
+                        if len(function_args[a]) >= f[a].arg_length:
+                            result.update(f[a].f(function_args[a]))
+
+
+                new_token = Token("X", fold_into.left, 0, 0, next(generator), result)
                 input_stack.append(new_token)
 
                 if not result.get("passing"):
@@ -93,10 +94,10 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
                         dot.node(str(i.graphviz_id), node_name)
                         dot.edge(str(i.graphviz_id), str(new_token.graphviz_id))
                     elif not result.get("passing") and i.values.get("passing"):
-                        dot.node(str(i.values.get("last_node")), str(i.values.get("last_node_data").get("val")) + " " + i.values.get("last_node_data").get("type") )
-                        dot.edge(str(i.values.get("last_node")), str(new_token.graphviz_id))
+                        for node, value in zip(i.values.get("last_node"), i.values.get("last_node_data")):
+                            dot.node(str(node), str(value.get("val")) + " " + str(value.get("type")) )
+                            dot.edge(str(node), str(new_token.graphviz_id))
 
-                # input_stack.append(indexes_to_words[next_move[0].row])
                 function_args = {i: [] for i in f}
             else:
                 token = input_stack.pop()
