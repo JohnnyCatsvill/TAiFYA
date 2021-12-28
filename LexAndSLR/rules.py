@@ -46,7 +46,7 @@ RULES = [
     ["EXPRESSION2", ["EXPRESSION2 divide_symbol EXPRESSION3"], [["div"], [], ["div"]]],
     ["EXPRESSION2", ["EXPRESSION3"], [["pass"]] ],
 
-    ["EXPRESSION3", ["( EXPRESSION )"], [[], ["pass_but_show"]]],
+    ["EXPRESSION3", ["( EXPRESSION )"], [[], ["pass"]]],
     ["EXPRESSION3", ["minus_symbol EXPRESSION3"], [[], ["negate"]]],
     ["EXPRESSION3", ["ANY_NUMBER"], [["pass"]] ],
 

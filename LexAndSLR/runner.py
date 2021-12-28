@@ -74,8 +74,6 @@ def runner(slr: SLR, lexer: list[Token], rules: list[Rule], show_parse: bool = F
                             result.update({"passing": True})
 
                         if len(function_args[a]) >= f[a].arg_length:
-                            print(function_args)
-                            print(a)
                             result.update(f[a].f(function_args[a]))
 
 

@@ -12,7 +12,7 @@ class Token:
                  values: dict[str, any] = dict()):
         self.word: any = value
         self.token: str = token
-        self.values: dict[str, any] = values
+        self.values: dict[str, any] = values.copy()
         self.row: int = row
         self.column: int = column
         self.graphviz_id: int = graphviz_id
@@ -335,13 +335,16 @@ class Lexer:
                 if elem.token in ["boolean_true", "boolean_false"]:
                     elem.values["type"] = BOOL_NAME
                     elem.values["val"] = elem.word.lower()
-                # elif elem.token == "binary_compare": #питон сошел с ума, я пытался
-                #     elem.values["val"] = elem.word
+
+                elif elem.token == "binary_compare": #питон сошел с ума, я пытался
+                    elem.values["val"] = elem.word
+
 
 
         actual_run()
         check_for_type_length_limit()
         add_additional_data()
+
 
     def show(self):
         for i in self.list:
