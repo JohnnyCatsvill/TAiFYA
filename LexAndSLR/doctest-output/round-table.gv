@@ -338,7 +338,7 @@ digraph {
 	173 -> 308
 	174 [label="= assign"]
 	174 -> 308
-	175 [label="1 int"]
+	175 [label="1.5 float"]
 	175 -> 308
 	176 [label="; divider"]
 	176 -> 308
@@ -412,7 +412,7 @@ digraph {
 	337 [label=" COMMAND t= a=43"]
 	337 -> 338
 	339 [label="X as LIST_OF_COMMANDS"]
-	308 [label=" COMMAND t= a=1"]
+	308 [label=" COMMAND t= a=1.5"]
 	308 -> 339
 	338 [label=" LIST_OF_COMMANDS"]
 	338 -> 339

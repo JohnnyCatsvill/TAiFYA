@@ -64,11 +64,14 @@ class VarsAndConst:
     def update_record(self, name: str, type: str, value: any, var: bool = True):  # проверка на конст
         for i, e in enumerate(self.list[::-1]):
             if e.name == name:
+                if e.type in [BIN_NAME, OCT_NAME, HEX_NAME, DEC_NAME] and type in [FLOAT_NAME]:
+                    value = int(value)
                 if e.type != type:
                     if type in [BIN_NAME, OCT_NAME, HEX_NAME, DEC_NAME, FLOAT_NAME] and e.type in [BIN_NAME, OCT_NAME,
                                                                                                    HEX_NAME, DEC_NAME,
                                                                                                    FLOAT_NAME]:
                         type = e.type
+
 
                 if e.is_var and e.type == type:  # если переменная нашего типа
                     self.list[-i - 1].value = value

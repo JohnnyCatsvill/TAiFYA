@@ -40,7 +40,7 @@ void main() {
 
     while(i < 10 && (i < 2 || i == 1)) { //cycle
         int a;
-        a = 1;
+        a = 1.5;
         a = -(-(a+a*-7)*-7)+a;
     }
 }
